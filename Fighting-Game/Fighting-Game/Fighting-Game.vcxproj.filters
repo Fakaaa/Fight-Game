@@ -13,5 +13,48 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Archivos de origen\Screen">
+      <UniqueIdentifier>{d34cf490-6476-4f66-a7c4-8f25b72538aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Game">
+      <UniqueIdentifier>{57b00e4c-1997-41d2-b58f-3379003002f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Players">
+      <UniqueIdentifier>{5c711822-e766-4d9b-98aa-0b0dfadf80cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Players">
+      <UniqueIdentifier>{57e89119-0678-451e-8369-8ca75fb7f0c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Screen">
+      <UniqueIdentifier>{be7a27ab-b2f9-4e8e-8637-1439718de46e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Game">
+      <UniqueIdentifier>{88d84578-0bca-4f91-8a7a-d3db1385634a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="players.cpp">
+      <Filter>Archivos de origen\Players</Filter>
+    </ClCompile>
+    <ClCompile Include="screen.cpp">
+      <Filter>Archivos de origen\Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="gameLoop.cpp">
+      <Filter>Archivos de origen\Game</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="players.h">
+      <Filter>Archivos de encabezado\Players</Filter>
+    </ClInclude>
+    <ClInclude Include="screen.h">
+      <Filter>Archivos de encabezado\Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="gameLoop.h">
+      <Filter>Archivos de encabezado\Game</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
