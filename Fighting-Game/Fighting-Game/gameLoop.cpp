@@ -4,8 +4,15 @@ namespace GL {
 
 	void InitializeAll(){
 
-		InitializeScreen();
+		Screen::InitializeScreen();
+		//MENU
+		//desp lo siguiente
+		Stage::InitializeStage();
+	}
 
+	void DeInitializeAll() {
+		//Players::UnloadTextures();
+		Stage::UnloadAssets();
 	}
 
 	void Loop() {
@@ -18,12 +25,27 @@ namespace GL {
 
 			BeginDrawing();
 
-			if (IsKeyPressed(KEY_ESCAPE))
-				WindowShouldClose();
+			DrawThings();
 
 			EndDrawing();
 		}
 
+		DeInitializeAll();
 		CloseWindow();
+	}
+
+	void DrawThings() {
+		Stage::DrawBackGround();
+	}
+
+	void Inputs() {
+		
+		CloseKey();
+
+	}
+
+	void CloseKey() {
+		if (IsKeyPressed(KEY_ESCAPE))
+			WindowShouldClose();
 	}
 }

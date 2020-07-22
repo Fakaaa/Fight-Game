@@ -135,6 +135,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="addStage.cpp" />
     <ClCompile Include="gameLoop.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="players.cpp" />
@@ -144,6 +145,7 @@
     <ClInclude Include="gameLoop.h" />
     <ClInclude Include="players.h" />
     <ClInclude Include="screen.h" />
+    <ClInclude Include="stage.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

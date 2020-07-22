@@ -45,6 +45,9 @@
     <ClCompile Include="gameLoop.cpp">
       <Filter>Archivos de origen\Game</Filter>
     </ClCompile>
+    <ClCompile Include="addStage.cpp">
+      <Filter>Archivos de origen\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="players.h">
@@ -54,6 +57,9 @@
       <Filter>Archivos de encabezado\Screen</Filter>
     </ClInclude>
     <ClInclude Include="gameLoop.h">
+      <Filter>Archivos de encabezado\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="stage.h">
       <Filter>Archivos de encabezado\Game</Filter>
     </ClInclude>
   </ItemGroup>

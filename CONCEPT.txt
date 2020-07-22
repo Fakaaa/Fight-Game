@@ -1,0 +1,15 @@
+ANIMATIONS REQUERIDES:
+
+1:Idle 			[Collider A]
+2:Move Left 		[Collider A]
+3:Move Right		[Collider A]
+4:Jump			[Collider A]
+5:Block			[Collider B]
+6:Punch			[Collider C]
+7:Kick			[Collider D]
+8:Crouch {		[Collider A (Height/2)]
+	  8.1:Low Block		Collider B ( Y / 2)
+	  8.2:Low Punch		Collider C ( Y / 2)
+	  8.3:Low kick		Collider D ( Y / 2)
+	 }
+9:Power (Skill) 	[Collider E]
