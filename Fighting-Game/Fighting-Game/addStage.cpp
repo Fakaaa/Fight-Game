@@ -6,7 +6,7 @@ namespace Stage {
 
 	void InitializeStage() {
 		
-		scenario.map = Port;
+		scenario.map = Airport;
 
 		LoadAssets();
 		scenario.floor = {0.0f , screenHeight - 60 , screenWidht , 10};

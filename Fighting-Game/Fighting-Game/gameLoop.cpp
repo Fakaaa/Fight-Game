@@ -5,9 +5,12 @@ namespace GL {
 	void InitializeAll(){
 
 		Screen::InitializeScreen();
+		SetTargetFPS(60);
 		//MENU
 		//desp lo siguiente
 		Stage::InitializeStage();
+
+		Players::InitializePlayers();
 	}
 
 	void DeInitializeAll() {
@@ -18,7 +21,7 @@ namespace GL {
 	void Loop() {
 		
 		InitializeAll();
-		
+
 		while (!WindowShouldClose()){
 
 			ClearBackground(BLACK);
@@ -26,6 +29,8 @@ namespace GL {
 			BeginDrawing();
 
 			DrawThings();
+
+			Inputs();
 
 			EndDrawing();
 		}
@@ -36,11 +41,14 @@ namespace GL {
 
 	void DrawThings() {
 		Stage::DrawBackGround();
+		Players::DrawPlayers();
 	}
 
 	void Inputs() {
 		
 		CloseKey();
+
+		Players::InputsPlayer();
 
 	}
 

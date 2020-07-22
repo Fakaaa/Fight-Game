@@ -24,9 +24,12 @@ namespace Players {
 		Vector2 direction;
 	};
 
+	extern Pjs player1;
+
 	extern void InitializePlayers();
 	extern void DrawPlayers();
 	extern void LoadTextures();
 	extern void UnloadTextures();
+	extern void InputsPlayer();
 }
 #endif // !PLAYERS
