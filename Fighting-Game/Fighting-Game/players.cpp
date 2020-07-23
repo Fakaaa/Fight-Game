@@ -32,7 +32,8 @@ namespace Players {
 
 		if (player1.champSelected == Jack) {
 			player1.characters.champ = Jack;
-			player1.characters.colliders[0] = {player1.collider.x + 20, player1.collider.y + 100, 140, 60};
+			player1.characters.colliders[0] = {player1.collider.x + 20, player1.collider.y + 50, 140, 60};
+			player1.characters.colliders[1] = {player1.collider.x + (player1.collider.width - 70), player1.collider.y + 100, 100, player1.collider.height / 2 };
 		}
 
 		if (playerDummy.champSelected == Jack) {
@@ -64,6 +65,17 @@ namespace Players {
 			ImageResize(&rescale, ((player1.collider.width + 50) * 4), (player1.collider.height));
 			player1.characters.anims[2] = LoadTextureFromImage(rescale);
 			UnloadImage(rescale);
+
+			rescale = LoadImage("assets/JUMP_JACK.png");
+			ImageResize(&rescale, ((player1.collider.width + 50) * 8), (player1.collider.height));
+			player1.characters.anims[3] = LoadTextureFromImage(rescale);
+			UnloadImage(rescale);
+
+			rescale = LoadImage("assets/BLOCK_JACK.png");
+			ImageResize(&rescale, ((player1.collider.width + 50) * 6), (player1.collider.height));
+			player1.characters.anims[4] = LoadTextureFromImage(rescale);
+			UnloadImage(rescale);
+
 		}
 	}
 
@@ -71,6 +83,8 @@ namespace Players {
 		UnloadTexture(player1.characters.anims[0]);
 		UnloadTexture(player1.characters.anims[1]);
 		UnloadTexture(player1.characters.anims[2]);
+		UnloadTexture(player1.characters.anims[3]);
+		UnloadTexture(player1.characters.anims[4]);
 	}
 
 	void CalcFrameAnimPlayer1() {
@@ -79,6 +93,7 @@ namespace Players {
 		{
 			framesCounter = 0;
 			currentFrame++;
+
 			if (currentFrame > framesAnim) currentFrame = 0;
 
 			player1.frameRec.x = ((float)currentFrame) * ((float)player1.characters.anims[0].width / framesAnim);
@@ -100,8 +115,15 @@ namespace Players {
 		if (player1.state.STATE_RIGHTW) {
 			DrawTextureRec(player1.characters.anims[2], player1.frameRec, player1.Pos, WHITE);
 		}
-
-
+		if (player1.state.STATE_JUMP) {
+			DrawTextureRec(player1.characters.anims[3], player1.frameRec, player1.Pos, WHITE);
+		}
+		if (player1.state.STATE_BLOCK) {
+			DrawTextureRec(player1.characters.anims[4], player1.frameRec, player1.Pos, WHITE);
+		}
+			DrawRectangleLinesEx(player1.characters.colliders[1], 2, WHITE);
+		
+		DrawRectangleLinesEx(player1.frameRec, 2, RED);
 		//DrawRectangleLinesEx(playerDummy.collider, 2, RED);
 		DrawRectangleLinesEx(player1.characters.colliders[0], 2, YELLOW);
 	}
@@ -119,6 +141,15 @@ namespace Players {
 		if (player1.state.STATE_PUNCH) {
 			framesSpeed = 8;
 		}
+		if (player1.state.STATE_JUMP) {
+			framesSpeed = 6;
+		}
+		if (player1.state.STATE_RIGHTW) {
+			framesSpeed = 5;
+		}
+		if (player1.state.STATE_BLOCK) {
+			framesSpeed = 6;
+		}
 	}
 
 	void PhysicsPlayers() {
@@ -131,6 +162,8 @@ namespace Players {
 		if (!inFloor) {
 			player1.collider.y = player1.collider.y + player1.speed.y * DELTA_TIME;
 			player1.speed.y = player1.speed.y - player1.gravity.y * (DELTA_TIME * 2);
+			player1.state.STATE_RIGHTW = false;
+			player1.state.STATE_LEFTW = false;
 		}
 		else {
 			player1.speed = {500.0f,20.0f};
@@ -154,6 +187,9 @@ namespace Players {
 		if (inFloor){
 			if (IsKeyDown(KEY_SPACE)) {
 				player1.state.STATE_JUMP = true;
+				if (player1.state.STATE_JUMP && inFloor) {
+					currentFrame = 8;
+				}
 			}
 			if (!player1.state.STATE_PUNCH && !player1.state.STATE_CROUCH && !player1.state.STATE_BLOCK && !player1.state.STATE_JUMP && !player1.state.STATE_KICK && !player1.state.STATE_LEFTW && !player1.state.STATE_RIGHTW) {
 				player1.state.STATE_IDLE = true;
@@ -167,13 +203,14 @@ namespace Players {
 		
 		//SALTO IN ACTION
 		if (player1.state.STATE_JUMP) {
+			framesAnim = 8;
 			player1.collider.y -= (player1.maxHeightJump * DELTA_TIME) * 8;
 		}
 
 		//CROUCH BEGIN
 		if (IsKeyDown(KEY_S)) {
 			player1.state.STATE_CROUCH = true;
-			framesAnim = 1;
+			framesAnim = 2;
 			player1.state.STATE_EXIT_C = false;
 		}
 		else
@@ -213,8 +250,31 @@ namespace Players {
 
 		if (player1.state.STATE_RIGHTW) {
 			player1.collider.x += 4.5f;
-			framesAnim = 4;
-			framesSpeed = 3;
+			if (inFloor) {
+				framesAnim = 4;
+				framesSpeed = 3;
+			}
+		}
+
+		//BLOCK DAMAGE
+		if (IsKeyDown(KEY_B)) {
+			player1.state.STATE_BLOCK = true;
+			player1.state.STATE_EXIT_B = false;
+		}
+		else {
+			player1.state.STATE_BLOCK = false;
+		}
+
+		if (player1.state.STATE_BLOCK) {
+			framesAnim = 8;
+			player1.characters.colliders[1].x = player1.collider.x + (player1.collider.width - 70);
+		}
+		else {
+			if (!player1.state.STATE_BLOCK && !player1.state.STATE_EXIT_B) {
+				player1.state.STATE_EXIT_B = true;
+			}
+			player1.characters.colliders[1].x = player1.collider.x;
+			player1.characters.colliders[1].y = player1.collider.y;
 		}
 
 		//PUNCH
@@ -231,10 +291,10 @@ namespace Players {
 		}
 		else {
 			if (!player1.state.STATE_PUNCH && !player1.state.STATE_EXIT_P) {
-				player1.characters.colliders[0] = { player1.collider.x + 20, player1.collider.y + 100, 140, 60 };
+				player1.characters.colliders[0] = { player1.collider.x + 20, player1.collider.y + 50, 140, 60 };
 				player1.state.STATE_EXIT_P = true;
 			}
-			player1.characters.colliders[0] = { player1.collider.x + 20, player1.collider.y + 100, 140, 60 };
+			player1.characters.colliders[0] = { player1.collider.x + 20, player1.collider.y + 50, 140, 60 };
 		}
 
 	}
