@@ -24,6 +24,8 @@ namespace GL {
 
 		while (!WindowShouldClose()){
 
+			Players::CalcDeltaTime();
+
 			ClearBackground(BLACK);
 
 			BeginDrawing();
@@ -48,8 +50,7 @@ namespace GL {
 		
 		CloseKey();
 
-		Players::InputsPlayer();
-
+		Players::PhysicsPlayers();
 	}
 
 	void CloseKey() {
