@@ -26,6 +26,8 @@ namespace GL {
 
 			Players::CalcDeltaTime();
 
+			Players::CalcFrameAnimPlayer1();
+
 			ClearBackground(BLACK);
 
 			BeginDrawing();
