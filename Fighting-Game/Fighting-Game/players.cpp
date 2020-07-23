@@ -7,6 +7,7 @@ namespace Players {
 	Pjs playerDummy;
 	bool inFloor = false;
 
+	int framesAnim = 0;
 	int currentFrame = 0;
 	int framesCounter = 0;
 	int framesSpeed = 8;
@@ -54,12 +55,22 @@ namespace Players {
 			player1.characters.anims[0] = LoadTextureFromImage(rescale);
 			UnloadImage(rescale);
 			
-			rescale = LoadImage();
+			rescale = LoadImage("assets/CROUCH_JACK.png");
+			ImageResize(&rescale, ((player1.collider.width + 50) * 4), (player1.collider.height - 120));
+			player1.characters.anims[1] = LoadTextureFromImage(rescale);
+			UnloadImage(rescale);
+
+			rescale = LoadImage("assets/WALK_RIGHT.png");
+			ImageResize(&rescale, ((player1.collider.width + 50) * 4), (player1.collider.height));
+			player1.characters.anims[2] = LoadTextureFromImage(rescale);
+			UnloadImage(rescale);
 		}
 	}
 
 	void UnloadTextures() {
 		UnloadTexture(player1.characters.anims[0]);
+		UnloadTexture(player1.characters.anims[1]);
+		UnloadTexture(player1.characters.anims[2]);
 	}
 
 	void CalcFrameAnimPlayer1() {
@@ -68,9 +79,9 @@ namespace Players {
 		{
 			framesCounter = 0;
 			currentFrame++;
-			if (currentFrame > 8) currentFrame = 0;
+			if (currentFrame > framesAnim) currentFrame = 0;
 
-			player1.frameRec.x = ((float)currentFrame) * ((float)player1.characters.anims[0].width / 8);
+			player1.frameRec.x = ((float)currentFrame) * ((float)player1.characters.anims[0].width / framesAnim);
 		}
 		if (framesSpeed > MAX_FRAME_SPEED) { framesSpeed = MAX_FRAME_SPEED; }
 		else if (framesSpeed < MIN_FRAME_SPEED) { framesSpeed = MIN_FRAME_SPEED; }
@@ -78,19 +89,21 @@ namespace Players {
 
 
 	void DrawPlayers() {
-		//DrawRectangleLinesEx(player1.collider, 2, GREEN);
+		DrawRectangleLinesEx(player1.collider, 2, GREEN);
 
 		if (player1.state.STATE_IDLE) {
 			DrawTextureRec(player1.characters.anims[0], player1.frameRec, player1.Pos, WHITE);
 		}
 		if (player1.state.STATE_CROUCH) {
-
+			DrawTextureRec(player1.characters.anims[1], player1.frameRec, player1.Pos, WHITE);
 		}
-		//DrawTexture(player1.characters.anims[0], player1.collider.x, player1.collider.y, WHITE);
+		if (player1.state.STATE_RIGHTW) {
+			DrawTextureRec(player1.characters.anims[2], player1.frameRec, player1.Pos, WHITE);
+		}
 
 
 		//DrawRectangleLinesEx(playerDummy.collider, 2, RED);
-		//DrawRectangleLinesEx(player1.characters.colliders[0], 2, YELLOW);
+		DrawRectangleLinesEx(player1.characters.colliders[0], 2, YELLOW);
 	}
 
 	void CalcDeltaTime() {
@@ -102,6 +115,9 @@ namespace Players {
 
 		if (player1.state.STATE_IDLE) {
 			framesSpeed = 6;
+		}
+		if (player1.state.STATE_PUNCH) {
+			framesSpeed = 8;
 		}
 	}
 
@@ -139,7 +155,14 @@ namespace Players {
 			if (IsKeyDown(KEY_SPACE)) {
 				player1.state.STATE_JUMP = true;
 			}
-			player1.state.STATE_IDLE = true;
+			if (!player1.state.STATE_PUNCH && !player1.state.STATE_CROUCH && !player1.state.STATE_BLOCK && !player1.state.STATE_JUMP && !player1.state.STATE_KICK && !player1.state.STATE_LEFTW && !player1.state.STATE_RIGHTW) {
+				player1.state.STATE_IDLE = true;
+				player1.frameRec.width = (float)(player1.characters.anims[0].width / 8);
+				framesAnim = 8;
+			}
+			else {
+				player1.state.STATE_IDLE = false;
+			}
 		}
 		
 		//SALTO IN ACTION
@@ -150,6 +173,7 @@ namespace Players {
 		//CROUCH BEGIN
 		if (IsKeyDown(KEY_S)) {
 			player1.state.STATE_CROUCH = true;
+			framesAnim = 1;
 			player1.state.STATE_EXIT_C = false;
 		}
 		else
@@ -158,6 +182,8 @@ namespace Players {
 		//CROUCH IN ACTION
 		if (player1.state.STATE_CROUCH) {
 			player1.collider.height = 190;
+			player1.frameRec.height = 190;
+			player1.frameRec.width = (float)(player1.characters.anims[1].width / 4);
 			if(inFloor)
 				player1.collider.y = 470;
 		}
@@ -172,14 +198,24 @@ namespace Players {
 				player1.state.STATE_EXIT_C = true;
 			}
 			player1.collider.height = 340;
+			player1.frameRec.height = 340;
 		}
 
 		//MOVE SIDES
+		if (IsKeyDown(KEY_D)) {
+			player1.state.STATE_RIGHTW = true;
+		}
+		else{
+			player1.state.STATE_RIGHTW = false;
+		}
 		if (IsKeyDown(KEY_A))
 			player1.collider.x -= 4.5f;
-		if (IsKeyDown(KEY_D))
-			player1.collider.x += 4.5f;
 
+		if (player1.state.STATE_RIGHTW) {
+			player1.collider.x += 4.5f;
+			framesAnim = 4;
+			framesSpeed = 3;
+		}
 
 		//PUNCH
 		if (IsKeyDown(KEY_C)) {

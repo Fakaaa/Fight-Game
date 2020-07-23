@@ -36,6 +36,8 @@ namespace Players {
 		bool STATE_EXIT_B;
 
 		bool STATE_IDLE;
+		bool STATE_LEFTW;
+		bool STATE_RIGHTW;
 	};
 
 	struct Pjs {
@@ -53,6 +55,7 @@ namespace Players {
 
 	extern Pjs player1;
 	extern Pjs playerDummy;
+	extern int framesAnim;
 	extern bool inFloor;
 	extern int currentFrame;
 	extern int framesCounter;
