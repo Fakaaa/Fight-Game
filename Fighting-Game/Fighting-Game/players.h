@@ -24,15 +24,18 @@ namespace Players {
 		bool STATE_JUMP;
 
 		bool STATE_PUNCH;
+		bool STATE_PUNCH_CROUCH;
 		bool STATE_EXIT_P;
 
 		bool STATE_CROUCH;
 		bool STATE_EXIT_C;
 
 		bool STATE_KICK;
+		bool STATE_KICK_CROUCH;
 		bool STATE_EXIT_K;
 
 		bool STATE_BLOCK;
+		bool STATE_BLOCK_CROUCH;
 		bool STATE_EXIT_B;
 
 		bool STATE_IDLE;
@@ -45,11 +48,13 @@ namespace Players {
 		Vector2 Pos;
 		Rectangle frameRec;
 		int champSelected;
+		int dashVal;
 		Champions characters;
 		Vector2 direction;
 		Vector2 speed;
 		Vector2 gravity;
 		float maxHeightJump;
+		float maxDashDistance;
 		PlayerState state;
 	};
 
