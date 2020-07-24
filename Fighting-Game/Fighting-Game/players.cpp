@@ -5,6 +5,13 @@ namespace Players {
 
 	Pjs player1;
 	Pjs playerDummy;
+
+	float punchLeght = 140.0f;
+	float punchHeight = 60.0f;
+	float blockSize = 100.0f;
+	float kickLenght = 240.0f;
+	float kickHeight = 60.0f;
+
 	bool inFloor = false;
 
 	int framesAnim = 0;
@@ -31,9 +38,11 @@ namespace Players {
 		playerDummy.champSelected = player1.champSelected;
 
 		if (player1.champSelected == Jack) {
+
 			player1.characters.champ = Jack;
-			player1.characters.colliders[0] = {player1.collider.x + 20, player1.collider.y + 50, 140, 60};
-			player1.characters.colliders[1] = {player1.collider.x + (player1.collider.width - 70), player1.collider.y + 100, 100, player1.collider.height / 2 };
+			player1.characters.colliders[0] = {player1.collider.x + 20, player1.collider.y + 50, punchLeght, punchHeight };
+			player1.characters.colliders[1] = {player1.collider.x + (player1.collider.width - 70), player1.collider.y + 100, blockSize, player1.collider.height / 2 };
+			player1.characters.colliders[2] = { player1.collider.x - (kickLenght / 2), player1.collider.y + +140, kickLenght, kickHeight };
 		}
 
 		if (playerDummy.champSelected == Jack) {
@@ -122,7 +131,9 @@ namespace Players {
 
 
 	void DrawPlayers() {
-		//DrawRectangleLinesEx(player1.collider, 2, GREEN);
+		DrawRectangleLinesEx(player1.collider, 2, GREEN);
+		DrawRectangleLinesEx(player1.characters.colliders[2], 2, VIOLET);
+		DrawRectangleLinesEx(player1.characters.colliders[0], 2, YELLOW);
 
 		if (player1.state.STATE_IDLE) {
 			DrawTextureRec(player1.characters.anims[0], player1.frameRec, player1.Pos, WHITE);
@@ -152,10 +163,9 @@ namespace Players {
 		if (player1.state.STATE_LEFTW) {
 			DrawTextureRec(player1.characters.anims[7], player1.frameRec, player1.Pos, WHITE);
 		}
-		
-		//DrawRectangleLinesEx(player1.frameRec, 2, RED);
+
+		DrawRectangleLinesEx(player1.frameRec, 2, RED);
 		//DrawRectangleLinesEx(playerDummy.collider, 2, RED);
-		//DrawRectangleLinesEx(player1.characters.colliders[0], 2, YELLOW);
 	}
 
 	void CalcDeltaTime() {
@@ -169,7 +179,7 @@ namespace Players {
 			framesSpeed = 6;
 		}
 		if (player1.state.STATE_PUNCH) {
-			framesSpeed = 10;
+			framesSpeed = 8;
 		}
 		if (player1.state.STATE_JUMP) {
 			framesSpeed = 6;
@@ -298,12 +308,14 @@ namespace Players {
 		if (!player1.state.STATE_BLOCK) {
 			if (IsKeyDown(KEY_D)) {
 				player1.state.STATE_RIGHTW = true;
+				player1.state.STATE_PUNCH = false;
 			}
 			else{
 				player1.state.STATE_RIGHTW = false;
 			}
 			if (IsKeyDown(KEY_A)) {
 				player1.state.STATE_LEFTW = true;
+				player1.state.STATE_PUNCH = false;
 			}
 			else {
 				player1.state.STATE_LEFTW = false;
@@ -329,7 +341,7 @@ namespace Players {
 		//BLOCK DAMAGE
 
 		if (!player1.state.STATE_LEFTW && !player1.state.STATE_RIGHTW) {
-			if (IsKeyDown(KEY_B)) {
+			if (IsKeyDown(KEY_J)) {
 				player1.state.STATE_BLOCK = true;
 				player1.state.STATE_EXIT_B = false;
 			}
@@ -353,30 +365,61 @@ namespace Players {
 		}
 
 		//PUNCH
-		if (IsKeyPressed(KEY_C)) {
-			if (inFloor) {
-				framesAnim = 6;
-				currentFrame = 0;
+		if (!player1.state.STATE_LEFTW && !player1.state.STATE_RIGHTW && !player1.state.STATE_BLOCK && !player1.state.STATE_JUMP && !player1.state.STATE_CROUCH) {
+			if (IsKeyPressed(KEY_G)) {
+				if (inFloor) {
+					framesAnim = 6;
+					currentFrame = 0;
 
-				player1.frameRec.width += player1.frameRec.width - 100;
-				
-				player1.state.STATE_PUNCH = true;
-				player1.state.STATE_EXIT_P = false;
+					player1.frameRec.width += player1.frameRec.width - 100;
+					
+					player1.state.STATE_PUNCH = true;
+					player1.state.STATE_EXIT_P = false;
+				}
 			}
 		}
 
 		if (inFloor) {
 			if (player1.state.STATE_PUNCH) {
-				player1.characters.colliders[0].x = player1.collider.x + player1.characters.colliders[0].width;
+				player1.characters.colliders[0].x = (player1.collider.x - 40) + player1.characters.colliders[0].width;
 				if (currentFrame == 6)
 					player1.state.STATE_PUNCH = false;
 			}
 			else {
 				if (!player1.state.STATE_PUNCH && !player1.state.STATE_EXIT_P) {
-					player1.characters.colliders[0] = { player1.collider.x + 20, player1.collider.y + 50, 140, 60 };
+					//player1.characters.colliders[0] = { player1.collider.x, player1.collider.y + 50, punchLeght, punchHeight };
 					player1.state.STATE_EXIT_P = true;
 				}
-				player1.characters.colliders[0] = { player1.collider.x + 20, player1.collider.y + 50, 140, 60 };
+				player1.characters.colliders[0] = { player1.collider.x, player1.collider.y + 50, punchLeght, punchHeight };
+			}
+		}
+
+		//KICK
+
+		//if (!player1.state.STATE_LEFTW && !player1.state.STATE_RIGHTW && !player1.state.STATE_BLOCK && !player1.state.STATE_JUMP && !player1.state.STATE_CROUCH && player1.state.STATE_PUNCH) {
+		//}
+		if (IsKeyPressed(KEY_H)) {
+			if (inFloor) {
+				framesAnim = 6;
+				currentFrame = 0;
+
+				player1.state.STATE_KICK = true;
+				player1.state.STATE_EXIT_K = false;
+			}
+		}
+
+		if (inFloor) {
+			if (player1.state.STATE_KICK) {
+				player1.characters.colliders[2].x = (player1.collider.x - punchLeght) + player1.characters.colliders[2].width;
+				if(currentFrame == 6)
+					player1.state.STATE_KICK = false;
+			}
+			else {
+				if (!player1.state.STATE_KICK && !player1.state.STATE_EXIT_K) {
+					//player1.characters.colliders[2] = { player1.collider.x - (kickLenght / 2), player1.collider.y + 190, kickLenght, kickHeight };
+					player1.state.STATE_EXIT_K = true;
+				}
+				player1.characters.colliders[2] = { player1.collider.x - (kickLenght / 2), player1.collider.y + 140, kickLenght, kickHeight };
 			}
 		}
 

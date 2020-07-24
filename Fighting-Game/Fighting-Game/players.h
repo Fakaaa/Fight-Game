@@ -17,7 +17,7 @@ namespace Players {
 	struct Champions{
 		ChampionID champ;
 		Texture2D anims[9];
-		Rectangle colliders[2];
+		Rectangle colliders[3];
 	};
 
 	struct PlayerState{
@@ -60,6 +60,14 @@ namespace Players {
 
 	extern Pjs player1;
 	extern Pjs playerDummy;
+
+	extern float punchLeght;
+	extern float punchHeight;
+	extern float blockSize;
+	extern float kickLenght;
+	extern float kickHeight;
+
+
 	extern int framesAnim;
 	extern bool inFloor;
 	extern int currentFrame;
