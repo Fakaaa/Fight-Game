@@ -32,9 +32,9 @@ namespace GL {
 
 			BeginDrawing();
 
-			DrawThings();
-
 			Inputs();
+
+			DrawThings();
 
 			EndDrawing();
 		}

@@ -9,7 +9,7 @@ namespace Players {
 	float punchLeght = 140.0f;
 	float punchHeight = 60.0f;
 	float blockSize = 100.0f;
-	float kickLenght = 240.0f;
+	float kickLenght = 195.0f;
 	float kickHeight = 60.0f;
 
 	bool inFloor = false;
@@ -42,7 +42,7 @@ namespace Players {
 			player1.characters.champ = Jack;
 			player1.characters.colliders[0] = {player1.collider.x + 20, player1.collider.y + 50, punchLeght, punchHeight };
 			player1.characters.colliders[1] = {player1.collider.x + (player1.collider.width - 70), player1.collider.y + 100, blockSize, player1.collider.height / 2 };
-			player1.characters.colliders[2] = { player1.collider.x - (kickLenght / 2), player1.collider.y + +140, kickLenght, kickHeight };
+			player1.characters.colliders[2] = { player1.collider.x - (kickLenght / 2), player1.collider.y + +110, kickLenght, kickHeight };
 		}
 
 		if (playerDummy.champSelected == Jack) {
@@ -100,6 +100,11 @@ namespace Players {
 			ImageResize(&rescale, ((player1.collider.width + 50) * 4), (player1.collider.height));
 			player1.characters.anims[7] = LoadTextureFromImage(rescale);
 			UnloadImage(rescale);
+
+			rescale = LoadImage("assets/KICK_JACK.png");
+			ImageResize(&rescale, ((player1.collider.width + 50) * 12), (player1.collider.height));
+			player1.characters.anims[8] = LoadTextureFromImage(rescale);
+			UnloadImage(rescale);
 		}
 	}
 
@@ -112,6 +117,7 @@ namespace Players {
 		UnloadTexture(player1.characters.anims[5]);
 		UnloadTexture(player1.characters.anims[6]);
 		UnloadTexture(player1.characters.anims[7]);
+		UnloadTexture(player1.characters.anims[8]);
 	}
 
 	void CalcFrameAnimPlayer1() {
@@ -163,6 +169,9 @@ namespace Players {
 		if (player1.state.STATE_LEFTW) {
 			DrawTextureRec(player1.characters.anims[7], player1.frameRec, player1.Pos, WHITE);
 		}
+		if (player1.state.STATE_KICK) {
+			DrawTextureRec(player1.characters.anims[8], player1.frameRec, player1.Pos, WHITE);
+		}
 
 		DrawRectangleLinesEx(player1.frameRec, 2, RED);
 		//DrawRectangleLinesEx(playerDummy.collider, 2, RED);
@@ -179,6 +188,9 @@ namespace Players {
 			framesSpeed = 6;
 		}
 		if (player1.state.STATE_PUNCH) {
+			framesSpeed = 8;
+		}
+		if (player1.state.STATE_KICK) {
 			framesSpeed = 8;
 		}
 		if (player1.state.STATE_JUMP) {
@@ -260,7 +272,7 @@ namespace Players {
 				player1.state.STATE_EXIT_C = false;
 				framesAnim = 2;
 
-				if (IsKeyDown(KEY_B)) {
+				if (IsKeyDown(KEY_J)) {
 					player1.state.STATE_BLOCK_CROUCH = true;
 				}
 				else {
@@ -387,7 +399,6 @@ namespace Players {
 			}
 			else {
 				if (!player1.state.STATE_PUNCH && !player1.state.STATE_EXIT_P) {
-					//player1.characters.colliders[0] = { player1.collider.x, player1.collider.y + 50, punchLeght, punchHeight };
 					player1.state.STATE_EXIT_P = true;
 				}
 				player1.characters.colliders[0] = { player1.collider.x, player1.collider.y + 50, punchLeght, punchHeight };
@@ -403,6 +414,8 @@ namespace Players {
 				framesAnim = 6;
 				currentFrame = 0;
 
+				player1.frameRec.width += player1.frameRec.width - 120;
+
 				player1.state.STATE_KICK = true;
 				player1.state.STATE_EXIT_K = false;
 			}
@@ -416,10 +429,9 @@ namespace Players {
 			}
 			else {
 				if (!player1.state.STATE_KICK && !player1.state.STATE_EXIT_K) {
-					//player1.characters.colliders[2] = { player1.collider.x - (kickLenght / 2), player1.collider.y + 190, kickLenght, kickHeight };
 					player1.state.STATE_EXIT_K = true;
 				}
-				player1.characters.colliders[2] = { player1.collider.x - (kickLenght / 2), player1.collider.y + 140, kickLenght, kickHeight };
+				player1.characters.colliders[2] = { player1.collider.x - (kickLenght / 2), player1.collider.y + 110, kickLenght, kickHeight };
 			}
 		}
 
