@@ -13,7 +13,7 @@ namespace Stage {
 
 	void InitializeStage() {
 		
-		scenario.map = NightClub;
+		scenario.map = Cascade;
 		frameRecStage = {0.0f,0.0f, screenWidht,screenHeight};
 		pos = {0.0f,0.0f};
 
