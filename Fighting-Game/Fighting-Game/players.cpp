@@ -44,6 +44,12 @@ namespace Players {
 			player1.characters.colliders[1] = {player1.collider.x + (player1.collider.width - 70), player1.collider.y + 100, blockSize, player1.collider.height / 2 };
 			player1.characters.colliders[2] = { player1.collider.x - (kickLenght / 2), player1.collider.y + +110, kickLenght, kickHeight };
 		}
+		if (player1.champSelected == Valhim) {
+			player1.characters.champ = Valhim;
+			player1.characters.colliders[0] = { player1.collider.x + 20, player1.collider.y + 50, punchLeght, punchHeight };
+			player1.characters.colliders[1] = { player1.collider.x + (player1.collider.width - 70), player1.collider.y + 100, blockSize, player1.collider.height / 2 };
+			player1.characters.colliders[2] = { player1.collider.x - (kickLenght / 2), player1.collider.y + +110, kickLenght, kickHeight };
+		}
 		
 
 		/*
@@ -55,7 +61,7 @@ namespace Players {
 
 		player1.maxHeightJump = 80.0f;
 		player1.maxDashDistance = 200.0f;
-		player1.gravity = { 0.0f,-450.0f };
+		player1.gravity = { 0.0f,-550.0f };
 		player1.state.STATE_EXIT_C = false;
 	}
 
@@ -63,7 +69,7 @@ namespace Players {
 
 		//player1.characters.champ = Jack;
 
-		player1.champSelected = Jack;
+		player1.champSelected = Melissa;
 		player1.characters.champ = player1.champSelected;
 
 		Image rescale;
@@ -115,12 +121,98 @@ namespace Players {
 			UnloadImage(rescale);
 		}
 
-		if (player1.characters.champ == Jhon) {
-			rescale = LoadImage("assets/JOHN_IDLE.png");
+		if (player1.characters.champ == Valhim) {
+			rescale = LoadImage("assets/VALHIM_IDLE.png");
 			ImageResize(&rescale, ((player1.collider.width + 50) * 8), (player1.collider.height));
 			player1.characters.anims[0] = LoadTextureFromImage(rescale);
 			UnloadImage(rescale);
 
+			rescale = LoadImage("assets/CROUCH_VALHIM.png");
+			ImageResize(&rescale, ((player1.collider.width + 50) * 4), (player1.collider.height - 120));
+			player1.characters.anims[1] = LoadTextureFromImage(rescale);
+			UnloadImage(rescale);
+
+			rescale = LoadImage("assets/VALHIM_WALK.png");
+			ImageResize(&rescale, ((player1.collider.width + 50) * 6), (player1.collider.height));
+			player1.characters.anims[2] = LoadTextureFromImage(rescale);
+			UnloadImage(rescale);
+
+			rescale = LoadImage("assets/JUMP_VALHIM.png");
+			ImageResize(&rescale, ((player1.collider.width + 50) * 8), (player1.collider.height));
+			player1.characters.anims[3] = LoadTextureFromImage(rescale);
+			UnloadImage(rescale);
+
+			rescale = LoadImage("assets/BLOCK_VALHIM.png");
+			ImageResize(&rescale, ((player1.collider.width + 50) * 6), (player1.collider.height));
+			player1.characters.anims[4] = LoadTextureFromImage(rescale);
+			UnloadImage(rescale);
+
+			rescale = LoadImage("assets/CROUCH_BLOCK_VALHIM.png");
+			ImageResize(&rescale, ((player1.collider.width + 50) * 4), (player1.collider.height - 120));
+			player1.characters.anims[5] = LoadTextureFromImage(rescale);
+			UnloadImage(rescale);
+
+			rescale = LoadImage("assets/PUNCH_VALHIM.png");
+			ImageResize(&rescale, ((player1.collider.width + 50) * 8), (player1.collider.height));
+			player1.characters.anims[6] = LoadTextureFromImage(rescale);
+			UnloadImage(rescale);
+
+			rescale = LoadImage("assets/VALHIM_LEFT.png");
+			ImageResize(&rescale, ((player1.collider.width + 50) * 6), (player1.collider.height));
+			player1.characters.anims[7] = LoadTextureFromImage(rescale);
+			UnloadImage(rescale);
+
+			rescale = LoadImage("assets/KICK_VALHIM.png");
+			ImageResize(&rescale, ((player1.collider.width + 50) * 12), (player1.collider.height));
+			player1.characters.anims[8] = LoadTextureFromImage(rescale);
+			UnloadImage(rescale);
+		}
+
+		if (player1.characters.champ == Melissa) {
+			rescale = LoadImage("assets/MELISSA_IDLE.png");
+			ImageResize(&rescale, ((player1.collider.width + 50) * 8), (player1.collider.height));
+			player1.characters.anims[0] = LoadTextureFromImage(rescale);
+			UnloadImage(rescale);
+
+			rescale = LoadImage("assets/CROUCH_MELISSA.png");
+			ImageResize(&rescale, ((player1.collider.width + 50) * 4), (player1.collider.height - 120));
+			player1.characters.anims[1] = LoadTextureFromImage(rescale);
+			UnloadImage(rescale);
+
+			rescale = LoadImage("assets/MELISSA_WALK.png");
+			ImageResize(&rescale, ((player1.collider.width + 50) * 12.1f), (player1.collider.height));
+			player1.characters.anims[2] = LoadTextureFromImage(rescale);
+			UnloadImage(rescale);
+
+			rescale = LoadImage("assets/JUMP_MELISSA.png");
+			ImageResize(&rescale, ((player1.collider.width + 50) * 7.9f), (player1.collider.height));
+			player1.characters.anims[3] = LoadTextureFromImage(rescale);
+			UnloadImage(rescale);
+
+			rescale = LoadImage("assets/BLOCK_MELISSA.png");
+			ImageResize(&rescale, ((player1.collider.width + 50) * 6), (player1.collider.height));
+			player1.characters.anims[4] = LoadTextureFromImage(rescale);
+			UnloadImage(rescale);
+
+			rescale = LoadImage("assets/CROUCH_BLOCK_MELISSA.png");
+			ImageResize(&rescale, ((player1.collider.width + 50) * 4), (player1.collider.height - 120));
+			player1.characters.anims[5] = LoadTextureFromImage(rescale);
+			UnloadImage(rescale);
+
+			rescale = LoadImage("assets/PUNCH_MELISSA.png");
+			ImageResize(&rescale, ((player1.collider.width + 50) * 8), (player1.collider.height));
+			player1.characters.anims[6] = LoadTextureFromImage(rescale);
+			UnloadImage(rescale);
+
+			rescale = LoadImage("assets/MELISSA_LEFT.png");
+			ImageResize(&rescale, ((player1.collider.width + 50) * 12.1f), (player1.collider.height));
+			player1.characters.anims[7] = LoadTextureFromImage(rescale);
+			UnloadImage(rescale);
+
+			rescale = LoadImage("assets/KICK_MELISSA.png");
+			ImageResize(&rescale, ((player1.collider.width + 50) * 12), (player1.collider.height));
+			player1.characters.anims[8] = LoadTextureFromImage(rescale);
+			UnloadImage(rescale);
 		}
 	}
 
@@ -166,7 +258,7 @@ namespace Players {
 			}
 			else {
 				DrawTextureRec(player1.characters.anims[5], player1.frameRec, player1.Pos, WHITE);
-				DrawRectangleLinesEx(player1.characters.colliders[1], 2, WHITE);
+				//DrawRectangleLinesEx(player1.characters.colliders[1], 2, WHITE);
 			}
 		}
 		if (player1.state.STATE_RIGHTW) {
@@ -177,7 +269,7 @@ namespace Players {
 		}
 		if (player1.state.STATE_BLOCK && !player1.state.STATE_CROUCH) {
 			DrawTextureRec(player1.characters.anims[4], player1.frameRec, player1.Pos, WHITE);
-			DrawRectangleLinesEx(player1.characters.colliders[1], 2, WHITE);
+			//DrawRectangleLinesEx(player1.characters.colliders[1], 2, WHITE);
 		}
 		if (player1.state.STATE_PUNCH) {
 			if(!player1.state.STATE_EXIT_P)
@@ -202,10 +294,13 @@ namespace Players {
 			DELTA_TIME = 0.15f;
 
 		if (player1.state.STATE_IDLE) {
-			framesSpeed = 6;
+			framesSpeed = 8;
 		}
 		if (player1.state.STATE_PUNCH) {
 			framesSpeed = 8;
+			if (player1.characters.champ == Melissa) {
+				framesSpeed = 12;
+			}
 		}
 		if (player1.state.STATE_KICK) {
 			framesSpeed = 8;
@@ -214,10 +309,10 @@ namespace Players {
 			framesSpeed = 6;
 		}
 		if (player1.state.STATE_RIGHTW) {
-			framesSpeed = 5;
+			framesSpeed = 7;
 		}
 		if (player1.state.STATE_LEFTW) {
-			framesSpeed = 5;
+			framesSpeed = 7;
 		}
 		if (player1.state.STATE_BLOCK) {
 			framesSpeed = 6;
@@ -269,6 +364,7 @@ namespace Players {
 			if (!player1.state.STATE_PUNCH && !player1.state.STATE_CROUCH && !player1.state.STATE_BLOCK && !player1.state.STATE_JUMP && !player1.state.STATE_KICK && !player1.state.STATE_LEFTW && !player1.state.STATE_RIGHTW) {
 				player1.state.STATE_IDLE = true;
 				player1.frameRec.width = (float)(player1.characters.anims[0].width / 8);
+
 				framesAnim = 8;
 			}
 			else {
@@ -280,6 +376,11 @@ namespace Players {
 		if (player1.state.STATE_JUMP) {
 			framesAnim = 8;
 			player1.collider.y -= (player1.maxHeightJump * DELTA_TIME) * 8;
+			player1.collider.height = 250;
+			if (currentFrame == 6) {
+				player1.collider.height = 340;
+				player1.collider.y = Stage::scenario.floor.y - 340;
+			}
 		}
 
 		//CROUCH BEGIN
@@ -355,7 +456,6 @@ namespace Players {
 			player1.collider.x -= 4.5f;
 			if (inFloor) {
 				framesAnim = 4;
-				framesSpeed = 3;
 			}
 		}
 
@@ -363,7 +463,6 @@ namespace Players {
 			player1.collider.x += 4.5f;
 			if (inFloor) {
 				framesAnim = 4;
-				framesSpeed = 3;
 			}
 		}
 
@@ -400,7 +499,12 @@ namespace Players {
 					framesAnim = 6;
 					currentFrame = 0;
 
-					player1.frameRec.width += player1.frameRec.width - 100;
+					if (player1.characters.champ == Jack || player1.characters.champ == Valhim) {
+						player1.frameRec.width += player1.frameRec.width - 100;
+					}
+					else {
+						player1.frameRec.width += player1.frameRec.width - 120;
+					}
 					
 					player1.state.STATE_PUNCH = true;
 					player1.state.STATE_EXIT_P = false;

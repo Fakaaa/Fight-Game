@@ -9,7 +9,7 @@ namespace Players {
 
 	enum ChampionID {
 		Jack,
-		Jhon,
+		Valhim,
 		Melissa,
 		Anna
 	};
