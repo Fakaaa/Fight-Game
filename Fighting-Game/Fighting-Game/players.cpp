@@ -30,13 +30,13 @@ namespace Players {
 		player1.Pos = {player1.collider.x,player1.collider.y};
 		player1.speed = {500,20};
 		LoadTextures();
-		player1.champSelected = Jack;
 		player1.frameRec = {0.0f,0.0f, (float)(player1.characters.anims[0].width / 8), (float)player1.characters.anims[0].height};
 
 		playerDummy.collider = { (0.0f + 1050), Stage::scenario.floor.y - 390 , 130, 340 };
 		playerDummy.speed = player1.speed;
 		playerDummy.champSelected = player1.champSelected;
 
+		
 		if (player1.champSelected == Jack) {
 
 			player1.characters.champ = Jack;
@@ -44,11 +44,14 @@ namespace Players {
 			player1.characters.colliders[1] = {player1.collider.x + (player1.collider.width - 70), player1.collider.y + 100, blockSize, player1.collider.height / 2 };
 			player1.characters.colliders[2] = { player1.collider.x - (kickLenght / 2), player1.collider.y + +110, kickLenght, kickHeight };
 		}
+		
 
+		/*
 		if (playerDummy.champSelected == Jack) {
 			playerDummy.characters.champ = Jack;
 			playerDummy.characters.colliders[0] = { playerDummy.collider.x + 20, playerDummy.collider.y + 100, 140, 60 };
 		}
+		*/
 
 		player1.maxHeightJump = 80.0f;
 		player1.maxDashDistance = 200.0f;
@@ -58,9 +61,14 @@ namespace Players {
 
 	void LoadTextures() {
 
+		//player1.characters.champ = Jack;
+
+		player1.champSelected = Jack;
+		player1.characters.champ = player1.champSelected;
+
 		Image rescale;
 
-		if (player1.champSelected == Jack) {
+		if (player1.characters.champ == Jack) {
 			rescale = LoadImage("assets/JACK_IDLE.png");
 			ImageResize(&rescale, ((player1.collider.width + 50) * 8), (player1.collider.height));
 			player1.characters.anims[0] = LoadTextureFromImage(rescale);
@@ -106,6 +114,14 @@ namespace Players {
 			player1.characters.anims[8] = LoadTextureFromImage(rescale);
 			UnloadImage(rescale);
 		}
+
+		if (player1.characters.champ == Jhon) {
+			rescale = LoadImage("assets/JOHN_IDLE.png");
+			ImageResize(&rescale, ((player1.collider.width + 50) * 8), (player1.collider.height));
+			player1.characters.anims[0] = LoadTextureFromImage(rescale);
+			UnloadImage(rescale);
+
+		}
 	}
 
 	void UnloadTextures() {
@@ -137,9 +153,9 @@ namespace Players {
 
 
 	void DrawPlayers() {
-		DrawRectangleLinesEx(player1.collider, 2, GREEN);
-		DrawRectangleLinesEx(player1.characters.colliders[2], 2, VIOLET);
-		DrawRectangleLinesEx(player1.characters.colliders[0], 2, YELLOW);
+		//DrawRectangleLinesEx(player1.collider, 2, GREEN);
+		//DrawRectangleLinesEx(player1.characters.colliders[2], 2, VIOLET);
+		//DrawRectangleLinesEx(player1.characters.colliders[0], 2, YELLOW);
 
 		if (player1.state.STATE_IDLE) {
 			DrawTextureRec(player1.characters.anims[0], player1.frameRec, player1.Pos, WHITE);
@@ -164,7 +180,8 @@ namespace Players {
 			DrawRectangleLinesEx(player1.characters.colliders[1], 2, WHITE);
 		}
 		if (player1.state.STATE_PUNCH) {
-			DrawTextureRec(player1.characters.anims[6], player1.frameRec, player1.Pos, WHITE);
+			if(!player1.state.STATE_EXIT_P)
+				DrawTextureRec(player1.characters.anims[6], player1.frameRec, player1.Pos, WHITE);
 		}
 		if (player1.state.STATE_LEFTW) {
 			DrawTextureRec(player1.characters.anims[7], player1.frameRec, player1.Pos, WHITE);
@@ -173,7 +190,7 @@ namespace Players {
 			DrawTextureRec(player1.characters.anims[8], player1.frameRec, player1.Pos, WHITE);
 		}
 
-		DrawRectangleLinesEx(player1.frameRec, 2, RED);
+		//DrawRectangleLinesEx(player1.frameRec, 2, RED);
 		//DrawRectangleLinesEx(playerDummy.collider, 2, RED);
 	}
 
@@ -317,7 +334,7 @@ namespace Players {
 
 		//MOVE SIDES
 
-		if (!player1.state.STATE_BLOCK) {
+		if (!player1.state.STATE_BLOCK && !player1.state.STATE_KICK && !player1.state.STATE_PUNCH) {
 			if (IsKeyDown(KEY_D)) {
 				player1.state.STATE_RIGHTW = true;
 				player1.state.STATE_PUNCH = false;

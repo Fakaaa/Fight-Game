@@ -47,7 +47,7 @@ namespace Players {
 		Rectangle collider;
 		Vector2 Pos;
 		Rectangle frameRec;
-		int champSelected;
+		ChampionID champSelected;
 		int dashVal;
 		Champions characters;
 		Vector2 direction;

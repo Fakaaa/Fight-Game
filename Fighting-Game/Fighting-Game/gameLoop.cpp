@@ -14,7 +14,7 @@ namespace GL {
 	}
 
 	void DeInitializeAll() {
-		//Players::UnloadTextures();
+		Players::UnloadTextures();
 		Stage::UnloadAssets();
 	}
 
@@ -25,6 +25,8 @@ namespace GL {
 		while (!WindowShouldClose()){
 
 			Players::CalcDeltaTime();
+
+			Stage::animBackGround();
 
 			Players::CalcFrameAnimPlayer1();
 

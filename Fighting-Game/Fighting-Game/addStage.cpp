@@ -3,10 +3,19 @@
 namespace Stage {
 
 	Stages scenario;
+	Rectangle frameRecStage;
+	Vector2 pos;
+
+	int framesAnim = 0;
+	int currentFrame = 0;
+	int framesCounter = 0;
+	int framesSpeed = 8;
 
 	void InitializeStage() {
 		
-		scenario.map = Airport;
+		scenario.map = NightClub;
+		frameRecStage = {0.0f,0.0f, screenWidht,screenHeight};
+		pos = {0.0f,0.0f};
 
 		LoadAssets();
 		scenario.floor = {0.0f , screenHeight - 60 , screenWidht , 10};
@@ -15,8 +24,26 @@ namespace Stage {
 	}
 
 	void DrawBackGround() {
-		DrawTexture(scenario.bg, 0, 0, WHITE);
-		DrawRectangleLinesEx(scenario.floor, 2, RED);
+		DrawTextureRec(scenario.bg,frameRecStage,pos,WHITE);
+
+
+		//DrawRectangleLinesEx(scenario.floor, 2, RED);
+		//DrawRectangleLinesEx(frameRecStage, 2, RED);
+	}
+
+	void animBackGround() {
+		framesCounter++;
+		if (framesCounter >= (60 / framesSpeed))
+		{
+			framesCounter = 0;
+			currentFrame++;
+
+			if (currentFrame > framesAnim) currentFrame = 0;
+
+			frameRecStage.x = ((float)currentFrame) * ((float)scenario.bg.width / framesAnim);
+		}
+		if (framesSpeed > MAX_FRAME_SPEED) { framesSpeed = MAX_FRAME_SPEED; }
+		else if (framesSpeed < MIN_FRAME_SPEED) { framesSpeed = MIN_FRAME_SPEED; }
 	}
 
 	void LoadAssets() {
@@ -24,16 +51,14 @@ namespace Stage {
 		Image rescale;
 
 		if (scenario.map == Airport) {
-			rescale = LoadImage("assets/AIRPORT.png");
-			ImageResize(&rescale, screenWidht, screenHeight);
-			scenario.bg = LoadTextureFromImage(rescale);
-			UnloadImage(rescale);
+			framesAnim = 4;
+			currentFrame = 0;
+			scenario.bg = LoadTexture("assets/AIRPORT.png");
 		}
 		if (scenario.map == NightClub) {
-			rescale = LoadImage("assets/NIGHTCLUB.png");
-			ImageResize(&rescale, screenWidht, screenHeight);
-			scenario.bg = LoadTextureFromImage(rescale);
-			UnloadImage(rescale);
+			framesAnim = 4;
+			currentFrame = 0;
+			scenario.bg = LoadTexture("assets/NIGHTCLUB.png");
 		}
 		if (scenario.map == Forest) {
 			rescale = LoadImage("assets/FOREST.png");
@@ -41,11 +66,10 @@ namespace Stage {
 			scenario.bg = LoadTextureFromImage(rescale);
 			UnloadImage(rescale);
 		}
-		if (scenario.map == Port) {
-			rescale = LoadImage("assets/PORT.png");
-			ImageResize(&rescale, screenWidht, screenHeight);
-			scenario.bg = LoadTextureFromImage(rescale);
-			UnloadImage(rescale);
+		if (scenario.map == Cascade) {
+			framesAnim = 4;
+			currentFrame = 0;
+			scenario.bg = LoadTexture("assets/CASCADE.png");
 		}
 	}
 	
