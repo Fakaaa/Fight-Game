@@ -5,7 +5,7 @@ namespace GL {
 	void InitializeAll(){
 
 		Screen::InitializeScreen();
-		SetTargetFPS(60);
+		SetTargetFPS(120);
 		//MENU
 		//desp lo siguiente
 		Stage::InitializeStage();
@@ -14,7 +14,8 @@ namespace GL {
 	}
 
 	void DeInitializeAll() {
-		Players::UnloadTextures();
+		Players::UnloadTextures(Players::player1);
+		Players::UnloadTextures(Players::playerDummy);
 		Stage::UnloadAssets();
 	}
 
@@ -28,7 +29,8 @@ namespace GL {
 
 			Stage::animBackGround();
 
-			Players::CalcFrameAnimPlayer1();
+			Players::CalcFrameAnimPlayers(Players::player1);
+			Players::CalcFrameAnimPlayers(Players::playerDummy);
 
 			ClearBackground(BLACK);
 
@@ -47,14 +49,21 @@ namespace GL {
 
 	void DrawThings() {
 		Stage::DrawBackGround();
-		Players::DrawPlayers();
+		Players::DrawPlayers(Players::playerDummy);
+		Players::DrawPlayers(Players::player1);
 	}
 
 	void Inputs() {
 		
 		CloseKey();
 
-		Players::PhysicsPlayers();
+		Players::InputsPlayer1(Players::player1);
+		Players::InputsPlayer2(Players::playerDummy);
+
+		Players::CheckOnFloor(Players::player1);
+		Players::CheckOnFloor(Players::playerDummy);
+
+		Players::PhysicsPlayers(Players::player1,Players::playerDummy);
 	}
 
 	void CloseKey() {

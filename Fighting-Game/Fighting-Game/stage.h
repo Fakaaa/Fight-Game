@@ -7,7 +7,7 @@ namespace Stage {
 
 	enum StageID{
 		Airport,
-		NightClub,
+		Factory,
 		Forest,
 		Cascade
 	};

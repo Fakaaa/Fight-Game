@@ -16,8 +16,13 @@ namespace Players {
 
 	struct Champions{
 		ChampionID champ;
-		Texture2D anims[9];
+		Texture2D animsRIGTH[9];
+		Texture2D animsLEFT[9];
 		Rectangle colliders[3];
+		int framesAnim;
+		int currentFrame;
+		int framesCounter;
+		int framesSpeed;
 	};
 
 	struct PlayerState{
@@ -48,7 +53,9 @@ namespace Players {
 		Vector2 Pos;
 		Rectangle frameRec;
 		ChampionID champSelected;
-		int dashVal;
+		float HP;
+		Texture2D LIFE_BAR;
+		Rectangle LIFE;
 		Champions characters;
 		Vector2 direction;
 		Vector2 speed;
@@ -56,6 +63,7 @@ namespace Players {
 		float maxHeightJump;
 		float maxDashDistance;
 		PlayerState state;
+		bool inFloor;
 	};
 
 	extern Pjs player1;
@@ -67,25 +75,19 @@ namespace Players {
 	extern float kickLenght;
 	extern float kickHeight;
 
-
-	extern int framesAnim;
-	extern bool inFloor;
-	extern int currentFrame;
-	extern int framesCounter;
-	extern int framesSpeed;
-
 	extern float PREVIUS_TIME;
 	extern float CURRENT_TIME;
 	extern float DELTA_TIME;
 
 	extern void InitializePlayers();
-	extern void CalcFrameAnimPlayer1();
-	extern void DrawPlayers();
-	extern void LoadTextures();
-	extern void UnloadTextures();
-	extern void InputsPlayer();
-	extern void PhysicsPlayers();
-	extern void CheckOnFloor();
+	extern void CalcFrameAnimPlayers(Pjs& player);
+	extern void DrawPlayers(Pjs& player);
+	extern void LoadTextures(Pjs& player);
+	extern void UnloadTextures(Pjs& player);
+	extern void InputsPlayer1(Pjs& player1);
+	extern void InputsPlayer2(Pjs& player2);
+	extern void PhysicsPlayers(Pjs& firstPj, Pjs& secondPj);
+	extern void CheckOnFloor(Pjs& player);
 	extern void CalcDeltaTime();
 }
 #endif // !PLAYERS

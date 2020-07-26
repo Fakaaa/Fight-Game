@@ -1,29 +1,34 @@
-﻿  players.cpp
-c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(79): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(84): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(89): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(94): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(99): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(104): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(109): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(114): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(119): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+﻿  addStage.cpp
+  gameLoop.cpp
+  main.cpp
+  players.cpp
+c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(91): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(96): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(101): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(106): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(111): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(116): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(121): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
 c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(126): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
 c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(131): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(136): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(141): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(146): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(151): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(156): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(161): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(166): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(138): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(143): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(148): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(153): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(158): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(163): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(168): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
 c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(173): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
 c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(178): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(183): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(188): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(193): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(198): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(203): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(208): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(213): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(185): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(190): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(195): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(200): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(205): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(210): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(215): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(220): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+c:\users\facundo\desktop\fight-game\fighting-game\fighting-game\players.cpp(225): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+  screen.cpp
+  Generando código...
   Fighting-Game.vcxproj -> C:\Users\Facundo\Desktop\Fight-Game\Fighting-Game\Debug\Fighting-Game.exe

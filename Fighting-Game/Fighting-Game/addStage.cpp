@@ -33,7 +33,7 @@ namespace Stage {
 
 	void animBackGround() {
 		framesCounter++;
-		if (framesCounter >= (60 / framesSpeed))
+		if (framesCounter >= (120 / framesSpeed))
 		{
 			framesCounter = 0;
 			currentFrame++;
@@ -55,16 +55,20 @@ namespace Stage {
 			currentFrame = 0;
 			scenario.bg = LoadTexture("assets/AIRPORT.png");
 		}
-		if (scenario.map == NightClub) {
-			framesAnim = 4;
+		if (scenario.map == Factory) {
+			framesAnim = 8;
 			currentFrame = 0;
-			scenario.bg = LoadTexture("assets/NIGHTCLUB.png");
-		}
-		if (scenario.map == Forest) {
-			rescale = LoadImage("assets/FOREST.png");
-			ImageResize(&rescale, screenWidht, screenHeight);
+			framesSpeed = 12;
+			rescale = LoadImage("assets/FACTORY.png");
+			ImageResize(&rescale, 9920, 720);
 			scenario.bg = LoadTextureFromImage(rescale);
 			UnloadImage(rescale);
+			//scenario.bg = LoadTexture("assets/FACTORY.png");
+		}
+		if (scenario.map == Forest) {
+			framesAnim = 4;
+			currentFrame = 0;
+			scenario.bg = LoadTexture("assets/FOREST.png");
 		}
 		if (scenario.map == Cascade) {
 			framesAnim = 4;
