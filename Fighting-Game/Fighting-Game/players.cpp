@@ -19,6 +19,7 @@ namespace Players {
 	void InitializePlayers() {
 
 
+		//init player 1
 		player1.collider = { (0.0f + 150), Stage::scenario.floor.y - 390 , 130, 340 };
 		player1.Pos = {player1.collider.x,player1.collider.y};
 		player1.speed = {400,20};
@@ -28,6 +29,7 @@ namespace Players {
 
 		LoadTextures(player1);
 
+		//init player  2
 		playerDummy.collider = { (0.0f + 1050), Stage::scenario.floor.y - 390 , 130, 340 };
 		playerDummy.speed = {400,20};
 		playerDummy.champSelected = Valhim;
@@ -36,6 +38,8 @@ namespace Players {
 
 		LoadTextures(playerDummy);
 
+
+		//player 1 & 2 frameRec y boxColliders
 		player1.frameRec = {0.0f,0.0f, (float)(player1.characters.animsRIGTH[0].width / 8), (float)player1.characters.animsRIGTH[0].height};
 		playerDummy.frameRec = { 0.0f,0.0f, (float)(playerDummy.characters.animsRIGTH[0].width / 8), (float)playerDummy.characters.animsRIGTH[0].height };
 
@@ -46,28 +50,6 @@ namespace Players {
 		playerDummy.characters.colliders[0] = { playerDummy.collider.x + 20, playerDummy.collider.y + 50, punchLeght, punchHeight };
 		playerDummy.characters.colliders[1] = { playerDummy.collider.x + (playerDummy.collider.width - 70), playerDummy.collider.y + 100, blockSize, playerDummy.collider.height / 2 };
 		playerDummy.characters.colliders[2] = { playerDummy.collider.x - (kickLenght / 2), playerDummy.collider.y + +110, kickLenght, kickHeight };
-
-		/*
-		if (player1.champSelected == Jack) {
-
-			player1.characters.champ = Jack;
-			player1.characters.colliders[0] = {player1.collider.x + 20, player1.collider.y + 50, punchLeght, punchHeight };
-			player1.characters.colliders[1] = {player1.collider.x + (player1.collider.width - 70), player1.collider.y + 100, blockSize, player1.collider.height / 2 };
-			player1.characters.colliders[2] = { player1.collider.x - (kickLenght / 2), player1.collider.y + +110, kickLenght, kickHeight };
-		}
-		if (player1.champSelected == Valhim) {
-			player1.characters.champ = Valhim;
-			player1.characters.colliders[0] = { player1.collider.x + 20, player1.collider.y + 50, punchLeght, punchHeight };
-			player1.characters.colliders[1] = { player1.collider.x + (player1.collider.width - 70), player1.collider.y + 100, blockSize, player1.collider.height / 2 };
-			player1.characters.colliders[2] = { player1.collider.x - (kickLenght / 2), player1.collider.y + +110, kickLenght, kickHeight };
-		}
-		*/
-		/*
-		if (playerDummy.champSelected == Jack) {
-			playerDummy.characters.champ = Jack;
-			playerDummy.characters.colliders[0] = { playerDummy.collider.x + 20, playerDummy.collider.y + 100, 140, 60 };
-		}
-		*/
 
 		player1.maxHeightJump = 80.0f;
 		player1.maxDashDistance = 200.0f;
@@ -83,7 +65,6 @@ namespace Players {
 	void LoadTextures(Pjs& player) {
 
 		player.characters.champ = player.champSelected;
-
 		Image rescale;
 
 		if (player.characters.champ == Jack) {
@@ -224,7 +205,7 @@ namespace Players {
 			rescale = LoadImage("assets/KICK_MELISSA.png");
 			ImageResize(&rescale, ((player.collider.width + 50) * 12), (player.collider.height));
 			player.characters.animsRIGTH[8] = LoadTextureFromImage(rescale);
-			UnloadImage(rescale);
+
 		}
 	}
 
@@ -295,6 +276,7 @@ namespace Players {
 			}
 			else {
 				DrawTextureRec(player.characters.animsRIGTH[5], player.frameRec, player.Pos, WHITE);
+				DrawTextureRec(player1.characters.animsRIGTH[5], player1.frameRec, player1.Pos, WHITE);
 				DrawRectangleLinesEx(player.characters.colliders[1], 2, WHITE);
 			}
 		}
@@ -482,6 +464,10 @@ namespace Players {
 			player1.collider.x -= (player1.speed.x * DELTA_TIME);
 			if (player1.inFloor) {
 				player1.characters.framesAnim = 4;
+
+				if (player1.inFloor) {
+					player1.characters.framesAnim = 4;
+				}
 			}
 		}
 
@@ -489,9 +475,12 @@ namespace Players {
 			player1.collider.x += (player1.speed.x * DELTA_TIME);
 			if (player1.inFloor) {
 				player1.characters.framesAnim = 4;
+
+				if (player1.inFloor) {
+					player1.characters.framesAnim = 4;
+				}
 			}
 		}
-
 		//BLOCK DAMAGE
 
 		if (!player1.state.STATE_LEFTW && !player1.state.STATE_RIGHTW) {
