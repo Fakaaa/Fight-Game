@@ -26,6 +26,7 @@ namespace Players {
 		player1.champSelected = Jack;
 		player1.inFloor = false;
 		player1.characters.framesSpeed = 8;
+		player1.direction = {1,0};
 
 		LoadTextures(player1);
 
@@ -35,6 +36,8 @@ namespace Players {
 		playerDummy.champSelected = Valhim;
 		playerDummy.inFloor = false;
 		playerDummy.characters.framesSpeed = 8;
+		playerDummy.direction = { 0,0 };
+
 
 		LoadTextures(playerDummy);
 
@@ -68,49 +71,70 @@ namespace Players {
 		Image rescale;
 
 		if (player.characters.champ == Jack) {
+
+			//rescale = LoadImage("assets/CH_MARC_JACK");
+
 			rescale = LoadImage("assets/JACK_IDLE.png");
 			ImageResize(&rescale, ((player.collider.width + 50) * 8), (player.collider.height));
 			player.characters.animsRIGTH[0] = LoadTextureFromImage(rescale);
+			ImageFlipHorizontal(&rescale);
+			player.characters.animsLEFT[0] = LoadTextureFromImage(rescale);
 			UnloadImage(rescale);
 			
 			rescale = LoadImage("assets/CROUCH_JACK.png");
 			ImageResize(&rescale, ((player.collider.width + 50) * 4), (player.collider.height - 120));
 			player.characters.animsRIGTH[1] = LoadTextureFromImage(rescale);
+			ImageFlipHorizontal(&rescale);
+			player.characters.animsLEFT[1] = LoadTextureFromImage(rescale);
 			UnloadImage(rescale);
 
 			rescale = LoadImage("assets/WALK_RIGHT.png");
 			ImageResize(&rescale, ((player.collider.width + 50) * 4), (player.collider.height));
 			player.characters.animsRIGTH[2] = LoadTextureFromImage(rescale);
+			ImageFlipHorizontal(&rescale);
+			player.characters.animsLEFT[2] = LoadTextureFromImage(rescale);
 			UnloadImage(rescale);
 
 			rescale = LoadImage("assets/JUMP_JACK.png");
 			ImageResize(&rescale, ((player.collider.width + 50) * 8), (player.collider.height));
 			player.characters.animsRIGTH[3] = LoadTextureFromImage(rescale);
+			ImageFlipHorizontal(&rescale);
+			player.characters.animsLEFT[3] = LoadTextureFromImage(rescale);
 			UnloadImage(rescale);
 
 			rescale = LoadImage("assets/BLOCK_JACK.png");
 			ImageResize(&rescale, ((player.collider.width + 50) * 6), (player.collider.height));
 			player.characters.animsRIGTH[4] = LoadTextureFromImage(rescale);
+			ImageFlipHorizontal(&rescale);
+			player.characters.animsLEFT[4] = LoadTextureFromImage(rescale);
 			UnloadImage(rescale);
 
 			rescale = LoadImage("assets/CROUCH_BLOCK.png");
 			ImageResize(&rescale, ((player.collider.width + 50) * 4), (player.collider.height - 120));
 			player.characters.animsRIGTH[5] = LoadTextureFromImage(rescale);
+			ImageFlipHorizontal(&rescale);
+			player.characters.animsLEFT[5] = LoadTextureFromImage(rescale);
 			UnloadImage(rescale);
 
 			rescale = LoadImage("assets/PUNCH_JACK.png");
 			ImageResize(&rescale, ((player.collider.width + 50) * 8), (player.collider.height));
 			player.characters.animsRIGTH[6] = LoadTextureFromImage(rescale);
+			ImageFlipHorizontal(&rescale);
+			player.characters.animsLEFT[6] = LoadTextureFromImage(rescale);
 			UnloadImage(rescale);
 
 			rescale = LoadImage("assets/WALK_LEFT.png");
 			ImageResize(&rescale, ((player.collider.width + 50) * 4), (player.collider.height));
 			player.characters.animsRIGTH[7] = LoadTextureFromImage(rescale);
+			ImageFlipHorizontal(&rescale);
+			player.characters.animsLEFT[7] = LoadTextureFromImage(rescale);
 			UnloadImage(rescale);
 
 			rescale = LoadImage("assets/KICK_JACK.png");
 			ImageResize(&rescale, ((player.collider.width + 50) * 12), (player.collider.height));
 			player.characters.animsRIGTH[8] = LoadTextureFromImage(rescale);
+			ImageFlipHorizontal(&rescale);
+			player.characters.animsLEFT[8] = LoadTextureFromImage(rescale);
 			UnloadImage(rescale);
 		}
 
@@ -118,46 +142,64 @@ namespace Players {
 			rescale = LoadImage("assets/VALHIM_IDLE.png");
 			ImageResize(&rescale, ((player.collider.width + 50) * 8), (player.collider.height));
 			player.characters.animsRIGTH[0] = LoadTextureFromImage(rescale);
+			ImageFlipHorizontal(&rescale);
+			player.characters.animsLEFT[0] = LoadTextureFromImage(rescale);
 			UnloadImage(rescale);
 
 			rescale = LoadImage("assets/CROUCH_VALHIM.png");
 			ImageResize(&rescale, ((player.collider.width + 50) * 4), (player.collider.height - 120));
 			player.characters.animsRIGTH[1] = LoadTextureFromImage(rescale);
+			ImageFlipHorizontal(&rescale);
+			player.characters.animsLEFT[1] = LoadTextureFromImage(rescale);
 			UnloadImage(rescale);
 
 			rescale = LoadImage("assets/VALHIM_WALK.png");
 			ImageResize(&rescale, ((player.collider.width + 50) * 6), (player.collider.height));
 			player.characters.animsRIGTH[2] = LoadTextureFromImage(rescale);
+			ImageFlipHorizontal(&rescale);
+			player.characters.animsLEFT[2] = LoadTextureFromImage(rescale);
 			UnloadImage(rescale);
 
 			rescale = LoadImage("assets/JUMP_VALHIM.png");
 			ImageResize(&rescale, ((player.collider.width + 50) * 8), (player.collider.height));
 			player.characters.animsRIGTH[3] = LoadTextureFromImage(rescale);
+			ImageFlipHorizontal(&rescale);
+			player.characters.animsLEFT[3] = LoadTextureFromImage(rescale);
 			UnloadImage(rescale);
 
 			rescale = LoadImage("assets/BLOCK_VALHIM.png");
 			ImageResize(&rescale, ((player.collider.width + 50) * 6), (player.collider.height));
 			player.characters.animsRIGTH[4] = LoadTextureFromImage(rescale);
+			ImageFlipHorizontal(&rescale);
+			player.characters.animsLEFT[4] = LoadTextureFromImage(rescale);
 			UnloadImage(rescale);
 
 			rescale = LoadImage("assets/CROUCH_BLOCK_VALHIM.png");
 			ImageResize(&rescale, ((player.collider.width + 50) * 4), (player.collider.height - 120));
 			player.characters.animsRIGTH[5] = LoadTextureFromImage(rescale);
+			ImageFlipHorizontal(&rescale);
+			player.characters.animsLEFT[5] = LoadTextureFromImage(rescale);
 			UnloadImage(rescale);
 
 			rescale = LoadImage("assets/PUNCH_VALHIM.png");
 			ImageResize(&rescale, ((player.collider.width + 50) * 8), (player.collider.height));
 			player.characters.animsRIGTH[6] = LoadTextureFromImage(rescale);
+			ImageFlipHorizontal(&rescale);
+			player.characters.animsLEFT[6] = LoadTextureFromImage(rescale);
 			UnloadImage(rescale);
 
 			rescale = LoadImage("assets/VALHIM_LEFT.png");
 			ImageResize(&rescale, ((player.collider.width + 50) * 6), (player.collider.height));
 			player.characters.animsRIGTH[7] = LoadTextureFromImage(rescale);
+			ImageFlipHorizontal(&rescale);
+			player.characters.animsLEFT[7] = LoadTextureFromImage(rescale);
 			UnloadImage(rescale);
 
 			rescale = LoadImage("assets/KICK_VALHIM.png");
 			ImageResize(&rescale, ((player.collider.width + 50) * 12), (player.collider.height));
 			player.characters.animsRIGTH[8] = LoadTextureFromImage(rescale);
+			ImageFlipHorizontal(&rescale);
+			player.characters.animsLEFT[8] = LoadTextureFromImage(rescale);
 			UnloadImage(rescale);
 		}
 
@@ -165,47 +207,65 @@ namespace Players {
 			rescale = LoadImage("assets/MELISSA_IDLE.png");
 			ImageResize(&rescale, ((player.collider.width + 50) * 8), (player.collider.height));
 			player.characters.animsRIGTH[0] = LoadTextureFromImage(rescale);
+			ImageFlipHorizontal(&rescale);
+			player.characters.animsLEFT[0] = LoadTextureFromImage(rescale);
 			UnloadImage(rescale);
 
 			rescale = LoadImage("assets/CROUCH_MELISSA.png");
 			ImageResize(&rescale, ((player.collider.width + 50) * 4), (player.collider.height - 120));
 			player.characters.animsRIGTH[1] = LoadTextureFromImage(rescale);
+			ImageFlipHorizontal(&rescale);
+			player.characters.animsLEFT[1] = LoadTextureFromImage(rescale);
 			UnloadImage(rescale);
 
 			rescale = LoadImage("assets/MELISSA_WALK.png");
 			ImageResize(&rescale, ((player.collider.width + 50) * 12.1f), (player.collider.height));
 			player.characters.animsRIGTH[2] = LoadTextureFromImage(rescale);
+			ImageFlipHorizontal(&rescale);
+			player.characters.animsLEFT[2] = LoadTextureFromImage(rescale);
 			UnloadImage(rescale);
 
 			rescale = LoadImage("assets/JUMP_MELISSA.png");
 			ImageResize(&rescale, ((player.collider.width + 50) * 7.9f), (player.collider.height));
 			player.characters.animsRIGTH[3] = LoadTextureFromImage(rescale);
+			ImageFlipHorizontal(&rescale);
+			player.characters.animsLEFT[3] = LoadTextureFromImage(rescale);
 			UnloadImage(rescale);
 
 			rescale = LoadImage("assets/BLOCK_MELISSA.png");
 			ImageResize(&rescale, ((player.collider.width + 50) * 6), (player.collider.height));
 			player.characters.animsRIGTH[4] = LoadTextureFromImage(rescale);
+			ImageFlipHorizontal(&rescale);
+			player.characters.animsLEFT[4] = LoadTextureFromImage(rescale);
 			UnloadImage(rescale);
 
 			rescale = LoadImage("assets/CROUCH_BLOCK_MELISSA.png");
 			ImageResize(&rescale, ((player.collider.width + 50) * 4), (player.collider.height - 120));
 			player.characters.animsRIGTH[5] = LoadTextureFromImage(rescale);
+			ImageFlipHorizontal(&rescale);
+			player.characters.animsLEFT[5] = LoadTextureFromImage(rescale);
 			UnloadImage(rescale);
 
 			rescale = LoadImage("assets/PUNCH_MELISSA.png");
 			ImageResize(&rescale, ((player.collider.width + 50) * 8), (player.collider.height));
 			player.characters.animsRIGTH[6] = LoadTextureFromImage(rescale);
+			ImageFlipHorizontal(&rescale);
+			player.characters.animsLEFT[6] = LoadTextureFromImage(rescale);
 			UnloadImage(rescale);
 
 			rescale = LoadImage("assets/MELISSA_LEFT.png");
 			ImageResize(&rescale, ((player.collider.width + 50) * 12.1f), (player.collider.height));
 			player.characters.animsRIGTH[7] = LoadTextureFromImage(rescale);
+			ImageFlipHorizontal(&rescale);
+			player.characters.animsLEFT[7] = LoadTextureFromImage(rescale);
 			UnloadImage(rescale);
 
 			rescale = LoadImage("assets/KICK_MELISSA.png");
 			ImageResize(&rescale, ((player.collider.width + 50) * 12), (player.collider.height));
 			player.characters.animsRIGTH[8] = LoadTextureFromImage(rescale);
-
+			ImageFlipHorizontal(&rescale);
+			player.characters.animsLEFT[8] = LoadTextureFromImage(rescale);
+			UnloadImage(rescale);
 		}
 	}
 
@@ -219,6 +279,16 @@ namespace Players {
 		UnloadTexture(player.characters.animsRIGTH[6]);
 		UnloadTexture(player.characters.animsRIGTH[7]);
 		UnloadTexture(player.characters.animsRIGTH[8]);
+
+		UnloadTexture(player.characters.animsLEFT[0]);
+		UnloadTexture(player.characters.animsLEFT[1]);
+		UnloadTexture(player.characters.animsLEFT[2]);
+		UnloadTexture(player.characters.animsLEFT[3]);
+		UnloadTexture(player.characters.animsLEFT[4]);
+		UnloadTexture(player.characters.animsLEFT[5]);
+		UnloadTexture(player.characters.animsLEFT[6]);
+		UnloadTexture(player.characters.animsLEFT[7]);
+		UnloadTexture(player.characters.animsLEFT[8]);
 	}
 
 	void CalcFrameAnimPlayers(Pjs& player) {
@@ -266,39 +336,92 @@ namespace Players {
 		DrawRectangleLinesEx(player.collider, 2, GREEN);
 		DrawRectangleLinesEx(player.characters.colliders[2], 2, VIOLET);
 		DrawRectangleLinesEx(player.characters.colliders[0], 2, YELLOW);
+		Vector2 auxPj2;
+		auxPj2 = { playerDummy.Pos.x + player.collider.width , playerDummy.Pos.y };
+		DrawLineEx(player1.Pos, auxPj2, 3, RED);
+
+		if (player1.Pos.x < playerDummy.Pos.x) {
+			player1.direction.x = 1;
+			playerDummy.direction.x = 0;
+		}
+		else {
+			player1.direction.x = 0;
+			playerDummy.direction.x = 1;
+		}
+
+		//DrawLineEx(playerDummy.Pos, player1.Pos, 3, PURPLE);
 
 		if (player.state.STATE_IDLE) {
-			DrawTextureRec(player.characters.animsRIGTH[0], player.frameRec, player.Pos, WHITE);
+			if(player.direction.x == 1)
+				DrawTextureRec(player.characters.animsRIGTH[0], player.frameRec, player.Pos, WHITE);
+			else
+				DrawTextureRec(player.characters.animsLEFT[0], player.frameRec, player.Pos, WHITE);
 		}
 		if (player.state.STATE_CROUCH) {
 			if (!player.state.STATE_BLOCK_CROUCH) {
-				DrawTextureRec(player.characters.animsRIGTH[1], player.frameRec, player.Pos, WHITE);
+					if(player.direction.x == 1)
+						DrawTextureRec(player.characters.animsRIGTH[1], player.frameRec, player.Pos, WHITE);
+					else
+						DrawTextureRec(player.characters.animsLEFT[1], player.frameRec, player.Pos, WHITE);
 			}
 			else {
-				DrawTextureRec(player.characters.animsRIGTH[5], player.frameRec, player.Pos, WHITE);
-				DrawTextureRec(player1.characters.animsRIGTH[5], player1.frameRec, player1.Pos, WHITE);
-				DrawRectangleLinesEx(player.characters.colliders[1], 2, WHITE);
+				if (player.direction.x == 1) {
+					DrawTextureRec(player.characters.animsRIGTH[5], player.frameRec, player.Pos, WHITE);
+					DrawRectangleLinesEx(player.characters.colliders[1], 2, WHITE);
+				}
+				else {
+					DrawTextureRec(player.characters.animsLEFT[5], player.frameRec, player.Pos, WHITE);
+					//DrawRectangleLinesEx(player.characters.colliders[1], 2, WHITE);
+					//HAY QUE INVERTIR EL COLLIDER
+				}
 			}
 		}
 		if (player.state.STATE_RIGHTW) {
-			DrawTextureRec(player.characters.animsRIGTH[2], player.frameRec, player.Pos, WHITE);
+			if(player.direction.x == 1)
+				DrawTextureRec(player.characters.animsRIGTH[2], player.frameRec, player.Pos, WHITE);
+			else
+				DrawTextureRec(player.characters.animsLEFT[2], player.frameRec, player.Pos, WHITE);
 		}
 		if (player.state.STATE_JUMP) {
-			DrawTextureRec(player.characters.animsRIGTH[3], player.frameRec, player.Pos, WHITE);
+			if(player.direction.x == 1)
+				DrawTextureRec(player.characters.animsRIGTH[3], player.frameRec, player.Pos, WHITE);
+			else
+				DrawTextureRec(player.characters.animsLEFT[3], player.frameRec, player.Pos, WHITE);
 		}
 		if (player.state.STATE_BLOCK && !player.state.STATE_CROUCH) {
-			DrawTextureRec(player.characters.animsRIGTH[4], player.frameRec, player.Pos, WHITE);
-			DrawRectangleLinesEx(player.characters.colliders[1], 2, WHITE);
+			if (player.direction.x == 1) {
+				DrawTextureRec(player.characters.animsRIGTH[4], player.frameRec, player.Pos, WHITE);
+				DrawRectangleLinesEx(player.characters.colliders[1], 2, WHITE);
+			}
+			else {
+				DrawTextureRec(player.characters.animsLEFT[4], player.frameRec, player.Pos, WHITE);
+				//DrawRectangleLinesEx(player.characters.colliders[1], 2, WHITE);
+				//HAY QUE INVERTIR BOX COLLIDER
+			}
 		}
 		if (player.state.STATE_PUNCH) {
-			if(!player.state.STATE_EXIT_P)
-				DrawTextureRec(player.characters.animsRIGTH[6], player.frameRec, player.Pos, WHITE);
+			if (!player.state.STATE_EXIT_P) {
+				if(player.direction.x == 1)
+					DrawTextureRec(player.characters.animsRIGTH[6], player.frameRec, player.Pos, WHITE);
+				else
+					DrawTextureRec(player.characters.animsLEFT[6], player.frameRec, player.Pos, WHITE);
+
+				//MODIFICAR COLLIDER (INVERTIRLO) EN SUS FUNCIONES DE INPUT
+			}
 		}
 		if (player.state.STATE_LEFTW) {
-			DrawTextureRec(player.characters.animsRIGTH[7], player.frameRec, player.Pos, WHITE);
+			if(player.direction.x == 1)
+				DrawTextureRec(player.characters.animsRIGTH[7], player.frameRec, player.Pos, WHITE);
+			else
+				DrawTextureRec(player.characters.animsLEFT[7], player.frameRec, player.Pos, WHITE);
 		}
 		if (player.state.STATE_KICK) {
-			DrawTextureRec(player.characters.animsRIGTH[8], player.frameRec, player.Pos, WHITE);
+			if(player.direction.x == 1)
+				DrawTextureRec(player.characters.animsRIGTH[8], player.frameRec, player.Pos, WHITE);
+			else
+				DrawTextureRec(player.characters.animsLEFT[8], player.frameRec, player.Pos, WHITE);
+
+			//INVERTIR BOX COLLIDER EN INPUTS PLAYERS
 		}
 
 		//DrawRectangleLinesEx(player1.frameRec, 2, RED);

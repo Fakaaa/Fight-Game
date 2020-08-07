@@ -54,6 +54,7 @@ namespace Players {
 		Rectangle frameRec;
 		ChampionID champSelected;
 		float HP;
+		Texture2D CH_MARC_LIFEBAR;
 		Texture2D LIFE_BAR;
 		Rectangle LIFE;
 		Champions characters;
