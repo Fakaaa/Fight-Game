@@ -23,13 +23,12 @@ namespace Players {
 		player1.collider = { (0.0f + 150), Stage::scenario.floor.y - 390 , 130, 340 };
 		player1.Pos = {player1.collider.x,player1.collider.y};
 		player1.speed = {400,20};
-		player1.champSelected = Jack;
+		player1.champSelected = Melissa;
 		player1.inFloor = false;
 		player1.characters.framesSpeed = 8;
 		player1.direction = {1,0};
-
 		LoadTextures(player1);
-
+		
 		//init player  2
 		playerDummy.collider = { (0.0f + 1050), Stage::scenario.floor.y - 390 , 130, 340 };
 		playerDummy.speed = {400,20};
@@ -37,10 +36,7 @@ namespace Players {
 		playerDummy.inFloor = false;
 		playerDummy.characters.framesSpeed = 8;
 		playerDummy.direction = { 0,0 };
-
-
 		LoadTextures(playerDummy);
-
 
 		//player 1 & 2 frameRec y boxColliders
 		player1.frameRec = {0.0f,0.0f, (float)(player1.characters.animsRIGTH[0].width / 8), (float)player1.characters.animsRIGTH[0].height};
@@ -63,6 +59,10 @@ namespace Players {
 		playerDummy.maxDashDistance = 200.0f;
 		playerDummy.gravity = { 0.0f,-470.0f };
 		playerDummy.state.STATE_EXIT_C = false;
+
+		player1.LIFE = { (float)player1.CH_MARC_LIFEBAR.width, 0.0f , (float)player1.LIFE_BAR.width, (float)player1.LIFE_BAR.height };
+		playerDummy.LIFE = { static_cast<float>((screenWidht / 2) + 5), 0.0f, (float)playerDummy.LIFE_BAR.width, (float)playerDummy.LIFE_BAR.height };
+
 	}
 
 	void LoadTextures(Pjs& player) {
@@ -72,7 +72,12 @@ namespace Players {
 
 		if (player.characters.champ == Jack) {
 
-			//rescale = LoadImage("assets/CH_MARC_JACK");
+			rescale = LoadImage("assets/CH_MARC_JACK.png");
+			ImageResize(&rescale, 120, 120);
+			if (player.direction.x == 0) 
+				ImageFlipHorizontal(&rescale);
+			player.CH_MARC_LIFEBAR = LoadTextureFromImage(rescale);
+			UnloadImage(rescale);
 
 			rescale = LoadImage("assets/JACK_IDLE.png");
 			ImageResize(&rescale, ((player.collider.width + 50) * 8), (player.collider.height));
@@ -139,6 +144,14 @@ namespace Players {
 		}
 
 		if (player.characters.champ == Valhim) {
+
+			rescale = LoadImage("assets/CH_MARC_VALHIM.png");
+			ImageResize(&rescale, 120, 120);
+			if (player.direction.x == 0)
+				ImageFlipHorizontal(&rescale);
+			player.CH_MARC_LIFEBAR = LoadTextureFromImage(rescale);
+			UnloadImage(rescale);
+
 			rescale = LoadImage("assets/VALHIM_IDLE.png");
 			ImageResize(&rescale, ((player.collider.width + 50) * 8), (player.collider.height));
 			player.characters.animsRIGTH[0] = LoadTextureFromImage(rescale);
@@ -204,6 +217,14 @@ namespace Players {
 		}
 
 		if (player.characters.champ == Melissa) {
+
+			rescale = LoadImage("assets/CH_MARC_MELISSA.png");
+			ImageResize(&rescale, 120, 120);
+			if (player.direction.x == 0)
+				ImageFlipHorizontal(&rescale);
+			player.CH_MARC_LIFEBAR = LoadTextureFromImage(rescale);
+			UnloadImage(rescale);
+
 			rescale = LoadImage("assets/MELISSA_IDLE.png");
 			ImageResize(&rescale, ((player.collider.width + 50) * 8), (player.collider.height));
 			player.characters.animsRIGTH[0] = LoadTextureFromImage(rescale);
@@ -267,6 +288,13 @@ namespace Players {
 			player.characters.animsLEFT[8] = LoadTextureFromImage(rescale);
 			UnloadImage(rescale);
 		}
+
+		rescale = LoadImage("assets/HEALTH_BAR.png");
+		ImageResize(&rescale, screenWidht / 2.5, 70);
+		if (player.direction.x == 0)
+			ImageFlipHorizontal(&rescale);
+		player.LIFE_BAR = LoadTextureFromImage(rescale);
+		UnloadImage(rescale);
 	}
 
 	void UnloadTextures(Pjs& player) {
@@ -289,6 +317,9 @@ namespace Players {
 		UnloadTexture(player.characters.animsLEFT[6]);
 		UnloadTexture(player.characters.animsLEFT[7]);
 		UnloadTexture(player.characters.animsLEFT[8]);
+
+		UnloadTexture(player.CH_MARC_LIFEBAR);
+		UnloadTexture(player.LIFE_BAR);
 	}
 
 	void CalcFrameAnimPlayers(Pjs& player) {
@@ -340,6 +371,16 @@ namespace Players {
 		auxPj2 = { playerDummy.Pos.x + player.collider.width , playerDummy.Pos.y };
 		DrawLineEx(player1.Pos, auxPj2, 3, RED);
 
+		//HEALTH BARS
+		DrawRectangleRec(player1.LIFE, RED);
+		DrawRectangleRec(playerDummy.LIFE, RED);
+
+		DrawTexture(player1.CH_MARC_LIFEBAR, 0, 0, WHITE);
+		DrawTexture(playerDummy.CH_MARC_LIFEBAR, screenWidht - playerDummy.CH_MARC_LIFEBAR.width, 0, WHITE);
+		DrawTexture(player1.LIFE_BAR, player1.CH_MARC_LIFEBAR.width, 0, WHITE);
+		DrawTexture(playerDummy.LIFE_BAR, ((screenWidht / 2) + 5), 0, WHITE);
+
+		//DETERMINAR LADO DE TEXTURA con VEC2 DIRECTION  1 --> Derecha 0 --> Izquierda
 		if (player1.Pos.x < playerDummy.Pos.x) {
 			player1.direction.x = 1;
 			playerDummy.direction.x = 0;
