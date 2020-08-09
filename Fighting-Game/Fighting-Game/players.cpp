@@ -1,16 +1,21 @@
 #include "players.h"
 #include "stage.h"
+#include <iostream>
+
+using namespace std;
 
 namespace Players {
 
 	Pjs player1;
 	Pjs playerDummy;
 
-	float punchLeght = 140.0f;
+	float punchLeght = 120.0f;
 	float punchHeight = 60.0f;
 	float blockSize = 100.0f;
 	float kickLenght = 195.0f;
 	float kickHeight = 60.0f;
+	float heightPlayers = 340;
+	float widhtPlayers = 110;
 
 	float PREVIUS_TIME = 0.0f;
 	float CURRENT_TIME = 0.0f;
@@ -20,7 +25,7 @@ namespace Players {
 
 
 		//init player 1
-		player1.collider = { (0.0f + 150), Stage::scenario.floor.y - 390 , 130, 340 };
+		player1.collider = { (0.0f + 150), Stage::scenario.floor.y - 390 , widhtPlayers, heightPlayers };
 		player1.Pos = {player1.collider.x,player1.collider.y};
 		player1.speed = {400,20};
 		player1.champSelected = Melissa;
@@ -30,7 +35,7 @@ namespace Players {
 		LoadTextures(player1);
 		
 		//init player  2
-		playerDummy.collider = { (0.0f + 1050), Stage::scenario.floor.y - 390 , 130, 340 };
+		playerDummy.collider = { (0.0f + 1050), Stage::scenario.floor.y - 390 , widhtPlayers, heightPlayers };
 		playerDummy.speed = {400,20};
 		playerDummy.champSelected = Valhim;
 		playerDummy.inFloor = false;
@@ -141,6 +146,13 @@ namespace Players {
 			ImageFlipHorizontal(&rescale);
 			player.characters.animsLEFT[8] = LoadTextureFromImage(rescale);
 			UnloadImage(rescale);
+
+			//rescale = LoadImage("assets/PUNCH_JACK_CROUCH.png");
+			//ImageResize(&rescale, ((player.collider.width + 50) * 4), (player.collider.height - 120));
+			//player.characters.animsRIGTH[9] = LoadTextureFromImage(rescale);
+			//ImageFlipHorizontal(&rescale);
+			//player.characters.animsLEFT[9] = LoadTextureFromImage(rescale);
+			//UnloadImage(rescale);
 		}
 
 		if (player.characters.champ == Valhim) {
@@ -213,6 +225,13 @@ namespace Players {
 			player.characters.animsRIGTH[8] = LoadTextureFromImage(rescale);
 			ImageFlipHorizontal(&rescale);
 			player.characters.animsLEFT[8] = LoadTextureFromImage(rescale);
+			UnloadImage(rescale);
+
+			rescale = LoadImage("assets/PUNCH_VALHIM_CROUCH.png");
+			ImageResize(&rescale, ((player.collider.width + 50) * 4), (player.collider.height - 120));
+			player.characters.animsRIGTH[9] = LoadTextureFromImage(rescale);
+			ImageFlipHorizontal(&rescale);
+			player.characters.animsLEFT[9] = LoadTextureFromImage(rescale);
 			UnloadImage(rescale);
 		}
 
@@ -287,6 +306,13 @@ namespace Players {
 			ImageFlipHorizontal(&rescale);
 			player.characters.animsLEFT[8] = LoadTextureFromImage(rescale);
 			UnloadImage(rescale);
+
+			rescale = LoadImage("assets/PUNCH_MELISSA_CROUCH.png");
+			ImageResize(&rescale, ((player.collider.width + 50) * 4), (player.collider.height - 120));
+			player.characters.animsRIGTH[9] = LoadTextureFromImage(rescale);
+			ImageFlipHorizontal(&rescale);
+			player.characters.animsLEFT[9] = LoadTextureFromImage(rescale);
+			UnloadImage(rescale);
 		}
 
 		rescale = LoadImage("assets/HEALTH_BAR.png");
@@ -307,6 +333,7 @@ namespace Players {
 		UnloadTexture(player.characters.animsRIGTH[6]);
 		UnloadTexture(player.characters.animsRIGTH[7]);
 		UnloadTexture(player.characters.animsRIGTH[8]);
+		UnloadTexture(player.characters.animsRIGTH[9]);
 
 		UnloadTexture(player.characters.animsLEFT[0]);
 		UnloadTexture(player.characters.animsLEFT[1]);
@@ -317,6 +344,7 @@ namespace Players {
 		UnloadTexture(player.characters.animsLEFT[6]);
 		UnloadTexture(player.characters.animsLEFT[7]);
 		UnloadTexture(player.characters.animsLEFT[8]);
+		UnloadTexture(player.characters.animsLEFT[9]);
 
 		UnloadTexture(player.CH_MARC_LIFEBAR);
 		UnloadTexture(player.LIFE_BAR);
@@ -328,10 +356,13 @@ namespace Players {
 			player.characters.framesSpeed = 8;
 		}
 		if (player.state.STATE_PUNCH) {
-			player.characters.framesSpeed = 8;
+			player.characters.framesSpeed = 12;
 			if (player.characters.champ == Melissa) {
 				player.characters.framesSpeed = 12;
 			}
+		}
+		if (player.state.STATE_PUNCH_CROUCH) {
+			player.characters.framesSpeed = 8;
 		}
 		if (player.state.STATE_KICK) {
 			player.characters.framesSpeed = 8;
@@ -363,7 +394,17 @@ namespace Players {
 		else if (player.characters.framesSpeed < MIN_FRAME_SPEED) { player.characters.framesSpeed = MIN_FRAME_SPEED; }
 	}
 
-	void DrawPlayers(Pjs& player) {
+	void DrawUI(Pjs& firstPj, Pjs& secondPj) {
+		DrawRectangleRec(firstPj.LIFE, RED);
+		DrawRectangleRec(secondPj.LIFE, RED);
+
+		DrawTexture(firstPj.CH_MARC_LIFEBAR, 0, 0, WHITE);
+		DrawTexture(secondPj.CH_MARC_LIFEBAR, screenWidht - secondPj.CH_MARC_LIFEBAR.width, 0, WHITE);
+		DrawTexture(firstPj.LIFE_BAR, firstPj.CH_MARC_LIFEBAR.width, 0, WHITE);
+		DrawTexture(secondPj.LIFE_BAR, ((screenWidht / 2) + 5), 0, WHITE);
+	}
+
+	void DrawBoxesColliders(Pjs& player) {
 		DrawRectangleLinesEx(player.collider, 2, GREEN);
 		DrawRectangleLinesEx(player.characters.colliders[2], 2, VIOLET);
 		DrawRectangleLinesEx(player.characters.colliders[0], 2, YELLOW);
@@ -371,14 +412,18 @@ namespace Players {
 		auxPj2 = { playerDummy.Pos.x + player.collider.width , playerDummy.Pos.y };
 		DrawLineEx(player1.Pos, auxPj2, 3, RED);
 
-		//HEALTH BARS
-		DrawRectangleRec(player1.LIFE, RED);
-		DrawRectangleRec(playerDummy.LIFE, RED);
+		//FrameRecs
+		//DrawRectangleLinesEx(player1.frameRec, 2, RED);
+		DrawRectangleLinesEx(playerDummy.frameRec, 2, RED);
+	}
 
-		DrawTexture(player1.CH_MARC_LIFEBAR, 0, 0, WHITE);
-		DrawTexture(playerDummy.CH_MARC_LIFEBAR, screenWidht - playerDummy.CH_MARC_LIFEBAR.width, 0, WHITE);
-		DrawTexture(player1.LIFE_BAR, player1.CH_MARC_LIFEBAR.width, 0, WHITE);
-		DrawTexture(playerDummy.LIFE_BAR, ((screenWidht / 2) + 5), 0, WHITE);
+	void DrawPlayers(Pjs& player) {
+
+		//BOX COLLIDERS AND LINE VECTOR
+		//DrawBoxesColliders(player);
+
+		//HEALTH BARS
+		DrawUI(player1, playerDummy);
 
 		//DETERMINAR LADO DE TEXTURA con VEC2 DIRECTION  1 --> Derecha 0 --> Izquierda
 		if (player1.Pos.x < playerDummy.Pos.x) {
@@ -390,8 +435,6 @@ namespace Players {
 			playerDummy.direction.x = 1;
 		}
 
-		//DrawLineEx(playerDummy.Pos, player1.Pos, 3, PURPLE);
-
 		if (player.state.STATE_IDLE) {
 			if(player.direction.x == 1)
 				DrawTextureRec(player.characters.animsRIGTH[0], player.frameRec, player.Pos, WHITE);
@@ -399,21 +442,26 @@ namespace Players {
 				DrawTextureRec(player.characters.animsLEFT[0], player.frameRec, player.Pos, WHITE);
 		}
 		if (player.state.STATE_CROUCH) {
-			if (!player.state.STATE_BLOCK_CROUCH) {
+			if (!player.state.STATE_BLOCK_CROUCH && !player.state.STATE_PUNCH_CROUCH) {
 					if(player.direction.x == 1)
 						DrawTextureRec(player.characters.animsRIGTH[1], player.frameRec, player.Pos, WHITE);
 					else
 						DrawTextureRec(player.characters.animsLEFT[1], player.frameRec, player.Pos, WHITE);
 			}
 			else {
-				if (player.direction.x == 1) {
-					DrawTextureRec(player.characters.animsRIGTH[5], player.frameRec, player.Pos, WHITE);
-					DrawRectangleLinesEx(player.characters.colliders[1], 2, WHITE);
+				if (player.state.STATE_BLOCK_CROUCH && !player.state.STATE_PUNCH_CROUCH) {
+					if (player.direction.x == 1) {
+						DrawTextureRec(player.characters.animsRIGTH[5], player.frameRec, player.Pos, WHITE);
+						DrawRectangleLinesEx(player.characters.colliders[1], 2, WHITE);
+					}
+					else {
+						DrawTextureRec(player.characters.animsLEFT[5], player.frameRec, player.Pos, WHITE);
+						DrawRectangleLinesEx(player.characters.colliders[1], 2, WHITE);
+						//HAY QUE INVERTIR EL COLLIDER
+					}
 				}
-				else {
-					DrawTextureRec(player.characters.animsLEFT[5], player.frameRec, player.Pos, WHITE);
-					//DrawRectangleLinesEx(player.characters.colliders[1], 2, WHITE);
-					//HAY QUE INVERTIR EL COLLIDER
+				if (player.state.STATE_PUNCH_CROUCH && !player.state.STATE_BLOCK_CROUCH) {
+						DrawTextureRec(player.characters.animsRIGTH[9], player.frameRec, player.Pos, WHITE);
 				}
 			}
 		}
@@ -442,6 +490,7 @@ namespace Players {
 		}
 		if (player.state.STATE_PUNCH) {
 			if (!player.state.STATE_EXIT_P) {
+
 				if(player.direction.x == 1)
 					DrawTextureRec(player.characters.animsRIGTH[6], player.frameRec, player.Pos, WHITE);
 				else
@@ -465,7 +514,6 @@ namespace Players {
 			//INVERTIR BOX COLLIDER EN INPUTS PLAYERS
 		}
 
-		//DrawRectangleLinesEx(player1.frameRec, 2, RED);
 	}
 
 	void CalcDeltaTime() {
@@ -476,7 +524,21 @@ namespace Players {
 			DELTA_TIME = 0.15f;
 	}
 
+	void MakeDameges(Pjs& firstPj, Pjs& secondPj) {
+		
+		if (CheckCollisionRecs(firstPj.characters.colliders[0], secondPj.collider)) {
+			secondPj.LIFE.x += 100 * GetFrameTime();
+		}
+		if (CheckCollisionRecs(secondPj.characters.colliders[0], firstPj.collider)) {
+			firstPj.LIFE.width -= 100 * GetFrameTime();
+		}
+
+
+	}
+
 	void PhysicsPlayers(Pjs& firstPj, Pjs& secondPj) {
+	
+		MakeDameges(firstPj, secondPj);
 
 		//GRAVEDAD EN ACCION
 		if (!firstPj.inFloor) {
@@ -510,6 +572,7 @@ namespace Players {
 			secondPj.collider.y = secondPj.collider.y;
 			secondPj.state.STATE_JUMP = false;
 		}
+
 		firstPj.Pos = { firstPj.collider.x,firstPj.collider.y };
 		secondPj.Pos = { secondPj.collider.x,secondPj.collider.y };
 	}
@@ -551,37 +614,50 @@ namespace Players {
 			player1.collider.height = 250;
 			if (player1.characters.currentFrame == 6) {
 				player1.collider.height = 340;
-				player1.collider.y = Stage::scenario.floor.y - 340;
+				player1.collider.y = Stage::scenario.floor.y - heightPlayers;
 			}
 		}
 
 		//CROUCH BEGIN
-		if (IsKeyDown(KEY_S)) {
-			if (player1.inFloor) {
-				player1.state.STATE_CROUCH = true;
-				player1.state.STATE_EXIT_C = false;
-				player1.characters.framesAnim = 2;
+		if (player1.inFloor) {
+			if (IsKeyDown(KEY_S)) {
+				
+					player1.state.STATE_CROUCH = true;
+					player1.state.STATE_EXIT_C = false;
+					player1.characters.framesAnim = 4;
 
-				if (IsKeyDown(KEY_J)) {
-					player1.state.STATE_BLOCK_CROUCH = true;
-				}
-				else {
-					player1.state.STATE_BLOCK_CROUCH = false;
-				}
+					if (IsKeyDown(KEY_J)) {
+						player1.state.STATE_BLOCK_CROUCH = true;
+					}
+					else {
+						player1.state.STATE_BLOCK_CROUCH = false;
+					}
+
+					if (IsKeyDown(KEY_G)) {
+						player1.frameRec.width = (float)(player1.characters.animsRIGTH[9].width / 3);
+						player1.characters.currentFrame = 0;
+						player1.state.STATE_PUNCH_CROUCH = true;
+					}
+					else {
+						player1.frameRec.width = (float)(player1.characters.animsRIGTH[1].width / 4);
+						player1.state.STATE_PUNCH_CROUCH = false;
+					}
 			}
+			else
+				player1.state.STATE_CROUCH = false;
 		}
-		else
-			player1.state.STATE_CROUCH = false;
 
 		//CROUCH IN ACTION
 		if (player1.inFloor) {
 			if (player1.state.STATE_CROUCH) {
 				player1.collider.height = 190;
 				player1.frameRec.height = 190;
-				player1.frameRec.width = (float)(player1.characters.animsRIGTH[1].width / 4);
+				//player1.frameRec.width = (float)(player1.characters.animsRIGTH[1].width / 4);
+
 				if(player1.inFloor)
 					player1.collider.y = 470;
 
+				//BLOCK CROUCHING
 				if (player1.state.STATE_BLOCK_CROUCH) {
 					player1.characters.colliders[1].x = player1.collider.x + (player1.collider.width - 70);
 				}
@@ -589,19 +665,30 @@ namespace Players {
 					player1.characters.colliders[1].x = player1.collider.x;
 					player1.characters.colliders[1].y = player1.collider.y;
 				}
+
+				//PUCNH CROUCHING
+
+				if (player1.state.STATE_PUNCH_CROUCH) {
+					player1.characters.colliders[0].x = (player1.collider.x - 40) + player1.characters.colliders[0].width;
+				}
+				else {
+					player1.characters.colliders[0] = { player1.collider.x, player1.collider.y + 50, punchLeght, punchHeight };
+				}
 			}
 			else {
+
+				//EXIT CROUCH
 				if (!player1.state.STATE_CROUCH && !player1.state.STATE_EXIT_C) {
 					if (player1.inFloor) {
-						player1.collider.y = Stage::scenario.floor.y - 340;
+						player1.collider.y = Stage::scenario.floor.y - heightPlayers;
 					}
 					else {
 						player1.collider.y = player1.collider.y;
 					}
 					player1.state.STATE_EXIT_C = true;
 				}
-				player1.collider.height = 340;
-				player1.frameRec.height = 340;
+				player1.collider.height = heightPlayers;
+				player1.frameRec.height = heightPlayers;
 			}
 		}
 
@@ -672,7 +759,7 @@ namespace Players {
 		}
 
 		//PUNCH
-		if (!player1.state.STATE_LEFTW && !player1.state.STATE_RIGHTW && !player1.state.STATE_BLOCK && !player1.state.STATE_JUMP && !player1.state.STATE_CROUCH) {
+		if (!player1.state.STATE_LEFTW && !player1.state.STATE_RIGHTW && !player1.state.STATE_BLOCK && !player1.state.STATE_JUMP && !player1.state.STATE_CROUCH && !player1.state.STATE_PUNCH_CROUCH) {
 			if (IsKeyPressed(KEY_G)) {
 				if (player1.inFloor) {
 					player1.characters.framesAnim = 6;
@@ -684,7 +771,7 @@ namespace Players {
 					else {
 						player1.frameRec.width += player1.frameRec.width - 120;
 					}
-					
+				
 					player1.state.STATE_PUNCH = true;
 					player1.state.STATE_EXIT_P = false;
 				}
@@ -701,14 +788,14 @@ namespace Players {
 				if (!player1.state.STATE_PUNCH && !player1.state.STATE_EXIT_P) {
 					player1.state.STATE_EXIT_P = true;
 				}
-				player1.characters.colliders[0] = { player1.collider.x, player1.collider.y + 50, punchLeght, punchHeight };
+				if (!player1.state.STATE_PUNCH_CROUCH) {
+					player1.characters.colliders[0] = { player1.collider.x, player1.collider.y + 50, punchLeght, punchHeight };
+				}
 			}
 		}
 
 		//KICK
 
-		//if (!player1.state.STATE_LEFTW && !player1.state.STATE_RIGHTW && !player1.state.STATE_BLOCK && !player1.state.STATE_JUMP && !player1.state.STATE_CROUCH && player1.state.STATE_PUNCH) {
-		//}
 		if (IsKeyPressed(KEY_H)) {
 			if (player1.inFloor) {
 				player1.characters.framesAnim = 6;
@@ -771,35 +858,49 @@ namespace Players {
 			player2.collider.y -= (player2.maxHeightJump * DELTA_TIME) * 8;
 			player2.collider.height = 250;
 			if (player2.characters.currentFrame == 6) {
-				player2.collider.height = 340;
-				player2.collider.y = Stage::scenario.floor.y - 340;
+				player2.collider.height = heightPlayers;
+				player2.collider.y = Stage::scenario.floor.y - heightPlayers;
 			}
 		}
 
 		//CROUCH BEGIN
-		if (IsKeyDown(KEY_DOWN)) {
-			if (player2.inFloor) {
+		if (player2.inFloor) {
+			if (IsKeyDown(KEY_DOWN)) {
 				player2.state.STATE_CROUCH = true;
 				player2.state.STATE_EXIT_C = false;
-				player2.characters.framesAnim = 2;
+				player2.characters.framesAnim = 4;
 
 				if (IsKeyDown(KEY_KP_3)) {
 					player2.state.STATE_BLOCK_CROUCH = true;
+					//cout << "ENTRO BLOCK" << endl;
 				}
 				else {
 					player2.state.STATE_BLOCK_CROUCH = false;
 				}
+
+				if (IsKeyDown(KEY_KP_1)) {
+					//cout << "ENTRO PUNCH" << endl;
+
+					player2.state.STATE_PUNCH_CROUCH = true;
+					player2.characters.currentFrame = 0;
+					player2.frameRec.width = (float)(player2.characters.animsRIGTH[9].width / 3);
+				}
+				else {
+					player2.frameRec.width = (float)(player2.characters.animsRIGTH[1].width / 4);
+					player2.state.STATE_PUNCH_CROUCH = false;
+				}
 			}
+			else
+				player2.state.STATE_CROUCH = false;
 		}
-		else
-			player2.state.STATE_CROUCH = false;
 
 		//CROUCH IN ACTION
 		if (player2.inFloor) {
 			if (player2.state.STATE_CROUCH) {
 				player2.collider.height = 190;
 				player2.frameRec.height = 190;
-				player2.frameRec.width = (float)(player2.characters.animsRIGTH[1].width / 4);
+				//player2.frameRec.width = (float)(player2.characters.animsRIGTH[1].width / 4);
+
 				if (player2.inFloor)
 					player2.collider.y = 470;
 
@@ -810,19 +911,26 @@ namespace Players {
 					player2.characters.colliders[1].x = player2.collider.x;
 					player2.characters.colliders[1].y = player2.collider.y;
 				}
+
+				if (player2.state.STATE_PUNCH_CROUCH) {
+					player2.characters.colliders[0].x = (player2.collider.x - 40) + player2.characters.colliders[0].width;
+				}
+				else {
+					player2.characters.colliders[0] = { player2.collider.x, player2.collider.y + 50, punchLeght, punchHeight };
+				}
 			}
 			else {
 				if (!player2.state.STATE_CROUCH && !player2.state.STATE_EXIT_C) {
 					if (player2.inFloor) {
-						player2.collider.y = Stage::scenario.floor.y - 340;
+						player2.collider.y = Stage::scenario.floor.y - heightPlayers;
 					}
 					else {
 						player2.collider.y = player2.collider.y;
 					}
 					player2.state.STATE_EXIT_C = true;
 				}
-				player2.collider.height = 340;
-				player2.frameRec.height = 340;
+				player2.collider.height = heightPlayers;
+				player2.frameRec.height = heightPlayers;
 			}
 		}
 
@@ -886,7 +994,7 @@ namespace Players {
 		}
 
 		//PUNCH
-		if (!player2.state.STATE_LEFTW && !player2.state.STATE_RIGHTW && !player2.state.STATE_BLOCK && !player2.state.STATE_JUMP && !player2.state.STATE_CROUCH) {
+		if (!player2.state.STATE_LEFTW && !player2.state.STATE_RIGHTW && !player2.state.STATE_BLOCK && !player2.state.STATE_JUMP && !player2.state.STATE_CROUCH && !player2.state.STATE_PUNCH_CROUCH) {
 			if (IsKeyPressed(KEY_KP_1)) {
 				if (player2.inFloor) {
 					player2.characters.framesAnim = 6;
@@ -915,14 +1023,13 @@ namespace Players {
 				if (!player2.state.STATE_PUNCH && !player2.state.STATE_EXIT_P) {
 					player2.state.STATE_EXIT_P = true;
 				}
-				player2.characters.colliders[0] = { player2.collider.x, player2.collider.y + 50, punchLeght, punchHeight };
+				if(!player2.state.STATE_PUNCH_CROUCH)
+					player2.characters.colliders[0] = { player2.collider.x, player2.collider.y + 50, punchLeght, punchHeight };
 			}
 		}
 
 		//KICK
 
-		//if (!player1.state.STATE_LEFTW && !player1.state.STATE_RIGHTW && !player1.state.STATE_BLOCK && !player1.state.STATE_JUMP && !player1.state.STATE_CROUCH && player1.state.STATE_PUNCH) {
-		//}
 		if (IsKeyPressed(KEY_KP_2)) {
 			if (player2.inFloor) {
 				player2.characters.framesAnim = 6;

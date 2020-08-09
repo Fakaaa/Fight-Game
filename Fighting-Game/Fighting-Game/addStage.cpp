@@ -13,7 +13,7 @@ namespace Stage {
 
 	void InitializeStage() {
 		
-		scenario.map = Cascade;
+		scenario.map = Airport;
 		frameRecStage = {0.0f,0.0f, screenWidht,screenHeight};
 		pos = {0.0f,0.0f};
 
@@ -25,7 +25,6 @@ namespace Stage {
 
 	void DrawBackGround() {
 		DrawTextureRec(scenario.bg,frameRecStage,pos,WHITE);
-
 
 		//DrawRectangleLinesEx(scenario.floor, 2, RED);
 		//DrawRectangleLinesEx(frameRecStage, 2, RED);

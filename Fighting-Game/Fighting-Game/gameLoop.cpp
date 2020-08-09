@@ -49,8 +49,8 @@ namespace GL {
 
 	void DrawThings() {
 		Stage::DrawBackGround();
-		Players::DrawPlayers(Players::player1);
 		Players::DrawPlayers(Players::playerDummy);
+		Players::DrawPlayers(Players::player1);
 	}
 
 	void Inputs() {

@@ -16,8 +16,8 @@ namespace Players {
 
 	struct Champions{
 		ChampionID champ;
-		Texture2D animsRIGTH[9];
-		Texture2D animsLEFT[9];
+		Texture2D animsRIGTH[14];
+		Texture2D animsLEFT[14];
 		Rectangle colliders[3];
 		int framesAnim;
 		int currentFrame;
@@ -27,6 +27,10 @@ namespace Players {
 
 	struct PlayerState{
 		bool STATE_JUMP;
+		
+		bool STATE_RE_DAMAGE_HIGH;
+		bool STATE_RE_DAMAGE_LOW;
+		bool STATE_RE_DAMAGE_CROUCH;
 
 		bool STATE_PUNCH;
 		bool STATE_PUNCH_CROUCH;
@@ -75,6 +79,8 @@ namespace Players {
 	extern float blockSize;
 	extern float kickLenght;
 	extern float kickHeight;
+	extern float heightPlayers;
+	extern float widhtPlayers;
 
 	extern float PREVIUS_TIME;
 	extern float CURRENT_TIME;
@@ -83,11 +89,14 @@ namespace Players {
 	extern void InitializePlayers();
 	extern void CalcFrameAnimPlayers(Pjs& player);
 	extern void DrawPlayers(Pjs& player);
+	extern void DrawUI(Pjs& firstPj, Pjs& secondPj);
+	extern void DrawBoxesColliders(Pjs& player);
 	extern void LoadTextures(Pjs& player);
 	extern void UnloadTextures(Pjs& player);
 	extern void InputsPlayer1(Pjs& player1);
 	extern void InputsPlayer2(Pjs& player2);
 	extern void PhysicsPlayers(Pjs& firstPj, Pjs& secondPj);
+	extern void MakeDameges(Pjs& firstPj, Pjs& secondPj);
 	extern void CheckOnFloor(Pjs& player);
 	extern void CalcDeltaTime();
 }
